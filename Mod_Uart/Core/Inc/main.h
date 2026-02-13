@@ -31,7 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#define OFFLINE_CAPTURE_MODE   1   // 1 = 64k snapshot mode		0 = continuous circular mode
+#define OFFLINE_CAPTURE_MODE   0   // 1 = 64k snapshot mode		0 = continuous circular mode
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -61,6 +61,8 @@ void post_processing(void);
 void uart_dump_capture(void);
 static inline uint32_t moving_average_16(uint32_t new_value);
 static inline uint32_t delayed_abs_diff(uint32_t new_ma);
+void generate_fsk_test(void);
+void DWT_Init(void);
 void HAL_DMA_XferHalfCpltCallback(DMA_HandleTypeDef *hdma);
 void HAL_DMA_XferCpltCallback(DMA_HandleTypeDef *hdma);
 

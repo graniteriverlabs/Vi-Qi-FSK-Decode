@@ -1,0 +1,18 @@
+!SESSION 2026-02-13 19:00:54.592 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data D:\gitrepo\Vi-Qi-FSK-Decode
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2026-02-13 19:01:02.660
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-02-13 19:01:02.662
+!MESSAGE Log4j2 initialized with config file D:\gitrepo\Vi-Qi-FSK-Decode\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-02-13 19:01:06.108
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-02-13 19:02:59.557
+!MESSAGE Indexed 'Mod_Uart' (25 sources, 155 headers) in 6.79 sec: 21,094 declarations; 111,063 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.13%)

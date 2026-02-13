@@ -52,6 +52,7 @@ UART_HandleTypeDef huart1;
 #define DELTA_MIN		   5		// 30ns/5.8823ns = 5 cycles
 #define DELTA_MAX		   61		// 360ns/5.8823ns = 61 cycles
 
+
 #if OFFLINE_CAPTURE_MODE
 #define PERIOD_BUF_SIZE		16384
 uint16_t period_buf[PERIOD_BUF_SIZE];
@@ -94,6 +95,9 @@ static uint8_t  ma_filled = 0;
 static uint32_t ma_delay_buffer[DELAY];
 static uint8_t  delay_index = 0;
 static uint8_t  delay_filled = 0;
+
+
+volatile uint32_t max_cycles = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -120,7 +124,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+	char msg[64];
+	uint32_t last_print = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -146,12 +151,13 @@ int main(void)
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  DWT_Init();
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
 
   HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_A);
 
   start_capture();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -159,6 +165,9 @@ int main(void)
   while (1)
   {
 #if OFFLINE_CAPTURE_MODE
+
+	generate_fsk_test();
+	HAL_Delay(1);
 	if (capture_done)
 	{
 		capture_done = 0;   // prevent re-entry
@@ -170,7 +179,26 @@ int main(void)
 		while(1);
 	}
 #else
+	generate_fsk_test();
+    static uint32_t last_print = 0;
 
+    if (HAL_GetTick() - last_print > 1000)  // every 1 second
+    {
+        last_print = HAL_GetTick();
+
+        uint32_t cycles = max_cycles;
+
+        uint32_t time = (cycles * 1000000UL) / 170000000UL;
+
+        int len = snprintf(msg, sizeof(msg),
+                           "MH %lu T: %lu us\r\n",
+                           cycles, time);
+
+        HAL_UART_Transmit(&huart1,
+                          (uint8_t*)msg,
+                          len,
+                          HAL_MAX_DELAY);
+    }
 	//Continuous mode: nothing required here
 	// Processing is done in DMA IRQ
 
@@ -697,7 +725,7 @@ void uart_dump_capture(void)
     for (uint32_t i = 0; i < CAPTURE_SAMPLES; i++)
     {
         int len = snprintf(line, sizeof(line),
-                           "%lu,%lu,%lu,%u\r\n",
+                           "%lu\t%lu\t%lu\t%u\r\n",
                            (unsigned long)debug_buf[i].period,
                            (unsigned long)debug_buf[i].ma,
                            (unsigned long)debug_buf[i].delta,
@@ -789,12 +817,53 @@ static inline uint32_t delayed_abs_diff(uint32_t new_ma)
     return diff;
 }
 
+
+void generate_fsk_test(void)
+{
+    static uint8_t bit = 0;
+
+    if (bit)
+    {
+        __HAL_TIM_SET_AUTORELOAD(&htim3, 894);   // 190 kHz
+        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 447);
+    }
+    else
+    {
+//        __HAL_TIM_SET_AUTORELOAD(&htim3, 1415);  // 120 kHz
+//        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 708);
+        __HAL_TIM_SET_AUTORELOAD(&htim3, 339);  // 120 kHz
+        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 170);
+    }
+
+//    bit ^= 1;
+}
+
+void DWT_Init(void)
+{
+    /* Enable TRC (Trace) */
+    CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+
+    /* Reset cycle counter */
+    DWT->CYCCNT = 0;
+
+    /* Enable cycle counter */
+    DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+}
+
 void HAL_DMA_XferHalfCpltCallback(DMA_HandleTypeDef *hdma)
 {
+	uint32_t start = DWT->CYCCNT;
     if (hdma == &hdma_hrtim1_a)
     {
         process_block(0, CAPTURE_SAMPLES / 2);
     }
+    uint32_t end = DWT->CYCCNT;
+
+    uint32_t cycles = end - start;
+
+
+    if (cycles > max_cycles)
+    	max_cycles = cycles;
 }
 
 void HAL_DMA_XferCpltCallback(DMA_HandleTypeDef *hdma)
@@ -810,11 +879,17 @@ void HAL_DMA_XferCpltCallback(DMA_HandleTypeDef *hdma)
         capture_done = 1;
     }
 #else
+	uint32_t start = DWT->CYCCNT;
     if (hdma == &hdma_hrtim1_a)
     {
         process_block(CAPTURE_SAMPLES / 2, CAPTURE_SAMPLES / 2);
     }
+    uint32_t end = DWT->CYCCNT;
 
+    uint32_t cycles = end - start;
+
+    if (cycles > max_cycles)
+    	max_cycles = cycles;
 #endif
 }
 /* USER CODE END 4 */

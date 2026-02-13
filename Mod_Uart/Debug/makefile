@@ -60,8 +60,8 @@ all: main-build
 main-build: Mod_Uart.elf secondary-outputs
 
 # Tool invocations
-Mod_Uart.elf Mod_Uart.map: $(OBJS) $(USER_OBJS) D:\Data\Vi_Qi\CubeIDE\Modulation\workspace\Mod_Uart\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Mod_Uart.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Data\Vi_Qi\CubeIDE\Modulation\workspace\Mod_Uart\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Mod_Uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Mod_Uart.elf Mod_Uart.map: $(OBJS) $(USER_OBJS) D:\gitrepo\Vi-Qi-FSK-Decode\Mod_Uart\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Mod_Uart.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\gitrepo\Vi-Qi-FSK-Decode\Mod_Uart\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Mod_Uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
