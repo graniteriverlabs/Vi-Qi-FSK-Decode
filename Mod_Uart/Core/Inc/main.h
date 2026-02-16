@@ -31,7 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#define OFFLINE_CAPTURE_MODE   0   // 1 = 64k snapshot mode		0 = continuous circular mode
+#define OFFLINE_CAPTURE_MODE   1   // 1 = 64k snapshot mode		0 = continuous circular mode
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

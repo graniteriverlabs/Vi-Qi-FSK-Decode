@@ -535,12 +535,12 @@ void start_capture(void)
 //        CAPTURE_SAMPLES
 //    );
 
+    __HAL_DMA_DISABLE_IT(&hdma_hrtim1_a, DMA_IT_HT);
+
     HAL_DMA_Start_IT(&hdma_hrtim1_a,
   		  (uint32_t)&HRTIM1->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_A].CPT1xR,
   		  (uint32_t)hrtim_capture_buf, CAPTURE_SAMPLES
   		  );
-
-    __HAL_DMA_DISABLE_IT(&hdma_hrtim1_a, DMA_IT_HT);
 
 #else
 

@@ -540,8 +540,6 @@ void start_capture(void)
   		  (uint32_t)hrtim_capture_buf, CAPTURE_SAMPLES
   		  );
 
-    __HAL_DMA_DISABLE_IT(&hdma_hrtim1_a, DMA_IT_HT);
-
 #else
 
 //    hdma_hrtim1_a.Init.Mode = DMA_CIRCULAR;

@@ -167,8 +167,8 @@ int main(void)
   {
 #if OFFLINE_CAPTURE_MODE
 
-//	generate_fsk_test(); //pwmdebug
-//	HAL_Delay(1);	//pwmdebug
+	generate_fsk_test();
+	HAL_Delay(1);
 	if (capture_done)
 	{
 		capture_done = 0;   // prevent re-entry
@@ -177,7 +177,7 @@ int main(void)
 		process_block(0, CAPTURE_SAMPLES);
 		uart_dump_capture();
 
-//		while(1);
+		while(1);
 	}
 #else
 	generate_fsk_test();
@@ -539,8 +539,6 @@ void start_capture(void)
   		  (uint32_t)&HRTIM1->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_A].CPT1xR,
   		  (uint32_t)hrtim_capture_buf, CAPTURE_SAMPLES
   		  );
-
-    __HAL_DMA_DISABLE_IT(&hdma_hrtim1_a, DMA_IT_HT);
 
 #else
 

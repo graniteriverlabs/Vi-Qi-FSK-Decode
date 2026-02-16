@@ -635,8 +635,13 @@ void process_block(uint32_t start, uint32_t length)
         if (delta > DELTA_MIN && delta < DELTA_MAX)
         {
 //            HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
-            toggle = !toggle;
+            toggle = 1;
         }
+        else
+        {
+        	toggle =0;
+        }
+
 
         debug_buf[debug_index].period  = period;
         debug_buf[debug_index].ma      = ma;

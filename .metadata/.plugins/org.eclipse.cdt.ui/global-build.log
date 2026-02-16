@@ -1,35 +1,15 @@
-19:02:59 **** Clean-only build of configuration Debug for project Mod_Uart ****
-make -j8 clean 
-rm -rf ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_hrtim.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_hrtim.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_hrtim.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_hrtim.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.su ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.cyclo ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.o ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.su
-rm -rf ./Core/Startup/startup_stm32g474retx.d ./Core/Startup/startup_stm32g474retx.o
-rm -rf ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/stm32g4xx_hal_msp.cyclo ./Core/Src/stm32g4xx_hal_msp.d ./Core/Src/stm32g4xx_hal_msp.o ./Core/Src/stm32g4xx_hal_msp.su ./Core/Src/stm32g4xx_it.cyclo ./Core/Src/stm32g4xx_it.d ./Core/Src/stm32g4xx_it.o ./Core/Src/stm32g4xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32g4xx.cyclo ./Core/Src/system_stm32g4xx.d ./Core/Src/system_stm32g4xx.o ./Core/Src/system_stm32g4xx.su
-rm -rf Mod_Uart.elf Mod_Uart.list Mod_Uart.map default.size.stdout
- 
-19:03:00 **** Build of configuration Debug for project Mod_Uart ****
+13:33:12 **** Incremental Build of configuration Debug for project Mod_Uart ****
 make -j8 all 
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_hrtim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_hrtim.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_hrtim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_hrtim.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.o"
-arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.o"
-arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Startup/startup_stm32g474retx.d" -MT"Core/Startup/startup_stm32g474retx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Startup/startup_stm32g474retx.o" "../Core/Startup/startup_stm32g474retx.s"
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  26460	     92	  10856	  37408	   9220	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+13:34:02 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc "../Core/Src/stm32g4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_hal_msp.d" -MT"Core/Src/stm32g4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_hal_msp.o"
 arm-none-eabi-gcc "../Core/Src/stm32g4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_it.d" -MT"Core/Src/stm32g4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_it.o"
-arm-none-eabi-gcc "../Core/Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/syscalls.d" -MT"Core/Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/syscalls.o"
 In file included from ../Core/Src/stm32g4xx_hal_msp.c:22:
 ../Core/Inc/main.h:62:24: warning: 'moving_average_16' declared 'static' but never defined [-Wunused-function]
    62 | static inline uint32_t moving_average_16(uint32_t new_value);
@@ -37,23 +17,6 @@ In file included from ../Core/Src/stm32g4xx_hal_msp.c:22:
 ../Core/Inc/main.h:63:24: warning: 'delayed_abs_diff' declared 'static' but never defined [-Wunused-function]
    63 | static inline uint32_t delayed_abs_diff(uint32_t new_ma);
       |                        ^~~~~~~~~~~~~~~~
-arm-none-eabi-gcc "../Core/Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/sysmem.d" -MT"Core/Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/sysmem.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:193:19: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
-  193 |         int len = snprintf(msg, sizeof(msg),
-      |                   ^~~~~~~~
-../Core/Src/main.c:25:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
-   24 | #include "string.h"
-  +++ |+#include <stdio.h>
-   25 | /* USER CODE END Includes */
-../Core/Src/main.c:193:19: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
-  193 |         int len = snprintf(msg, sizeof(msg),
-      |                   ^~~~~~~~
-../Core/Src/main.c:193:19: note: include '<stdio.h>' or provide a declaration of 'snprintf'
-../Core/Src/main.c:128:18: warning: unused variable 'last_print' [-Wunused-variable]
-  128 |         uint32_t last_print = 0;
-      |                  ^~~~~~~~~~
-arm-none-eabi-gcc "../Core/Src/system_stm32g4xx.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/system_stm32g4xx.d" -MT"Core/Src/system_stm32g4xx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/system_stm32g4xx.o"
 In file included from ../Core/Src/stm32g4xx_it.c:21:
 ../Core/Inc/main.h:62:24: warning: 'moving_average_16' declared 'static' but never defined [-Wunused-function]
    62 | static inline uint32_t moving_average_16(uint32_t new_value);
@@ -61,14 +24,349 @@ In file included from ../Core/Src/stm32g4xx_it.c:21:
 ../Core/Inc/main.h:63:24: warning: 'delayed_abs_diff' declared 'static' but never defined [-Wunused-function]
    63 | static inline uint32_t delayed_abs_diff(uint32_t new_ma);
       |                        ^~~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:128:18: warning: unused variable 'last_print' [-Wunused-variable]
+  128 |         uint32_t last_print = 0;
+      |                  ^~~~~~~~~~
+../Core/Src/main.c:127:14: warning: unused variable 'msg' [-Wunused-variable]
+  127 |         char msg[64];
+      |              ^~~
+../Core/Src/main.c: In function 'uart_dump_capture':
+../Core/Src/main.c:727:19: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  727 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:25:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   24 | #include "string.h"
+  +++ |+#include <stdio.h>
+   25 | /* USER CODE END Includes */
+../Core/Src/main.c:727:19: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  727 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:727:19: note: include '<stdio.h>' or provide a declaration of 'snprintf'
 arm-none-eabi-gcc -o "Mod_Uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\gitrepo\Vi-Qi-FSK-Decode\Mod_Uart\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Mod_Uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Mod_Uart.elf
  
 arm-none-eabi-size  Mod_Uart.elf 
 arm-none-eabi-objdump -h -S Mod_Uart.elf  > "Mod_Uart.list"
    text	   data	    bss	    dec	    hex	filename
-  26460	     92	  10856	  37408	   9220	Mod_Uart.elf
+  26936	     92	  84600	 111628	  1b40c	Mod_Uart.elf
 Finished building: default.size.stdout
  
 Finished building: Mod_Uart.list
+ 
+13:39:25 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  26936	     92	  84600	 111628	  1b40c	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+13:55:00 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:128:18: warning: unused variable 'last_print' [-Wunused-variable]
+  128 |         uint32_t last_print = 0;
+      |                  ^~~~~~~~~~
+../Core/Src/main.c:127:14: warning: unused variable 'msg' [-Wunused-variable]
+  127 |         char msg[64];
+      |              ^~~
+../Core/Src/main.c: In function 'uart_dump_capture':
+../Core/Src/main.c:734:19: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  734 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:25:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   24 | #include "string.h"
+  +++ |+#include <stdio.h>
+   25 | /* USER CODE END Includes */
+../Core/Src/main.c:734:19: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  734 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:734:19: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+arm-none-eabi-gcc -o "Mod_Uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\gitrepo\Vi-Qi-FSK-Decode\Mod_Uart\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Mod_Uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Mod_Uart.elf
+ 
+arm-none-eabi-size  Mod_Uart.elf 
+arm-none-eabi-objdump -h -S Mod_Uart.elf  > "Mod_Uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  26184	     92	  84592	 110868	  1b114	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: Mod_Uart.list
+ 
+13:57:26 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  26184	     92	  84592	 110868	  1b114	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+14:18:02 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32g4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_it.d" -MT"Core/Src/stm32g4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_it.o"
+In file included from ../Core/Src/stm32g4xx_it.c:21:
+../Core/Inc/main.h:62:24: warning: 'moving_average_16' declared 'static' but never defined [-Wunused-function]
+   62 | static inline uint32_t moving_average_16(uint32_t new_value);
+      |                        ^~~~~~~~~~~~~~~~~
+../Core/Inc/main.h:63:24: warning: 'delayed_abs_diff' declared 'static' but never defined [-Wunused-function]
+   63 | static inline uint32_t delayed_abs_diff(uint32_t new_ma);
+      |                        ^~~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:128:18: warning: unused variable 'last_print' [-Wunused-variable]
+  128 |         uint32_t last_print = 0;
+      |                  ^~~~~~~~~~
+../Core/Src/main.c:127:14: warning: unused variable 'msg' [-Wunused-variable]
+  127 |         char msg[64];
+      |              ^~~
+../Core/Src/main.c: In function 'uart_dump_capture':
+../Core/Src/main.c:738:19: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  738 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:25:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   24 | #include "string.h"
+  +++ |+#include <stdio.h>
+   25 | /* USER CODE END Includes */
+../Core/Src/main.c:738:19: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  738 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:738:19: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+arm-none-eabi-gcc -o "Mod_Uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\gitrepo\Vi-Qi-FSK-Decode\Mod_Uart\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Mod_Uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Mod_Uart.elf
+ 
+arm-none-eabi-size  Mod_Uart.elf 
+arm-none-eabi-objdump -h -S Mod_Uart.elf  > "Mod_Uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  27068	     92	  84600	 111760	  1b490	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: Mod_Uart.list
+ 
+14:18:16 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  27068	     92	  84600	 111760	  1b490	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+14:20:40 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  27068	     92	  84600	 111760	  1b490	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+14:32:17 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:128:18: warning: unused variable 'last_print' [-Wunused-variable]
+  128 |         uint32_t last_print = 0;
+      |                  ^~~~~~~~~~
+../Core/Src/main.c:127:14: warning: unused variable 'msg' [-Wunused-variable]
+  127 |         char msg[64];
+      |              ^~~
+../Core/Src/main.c: In function 'uart_dump_capture':
+../Core/Src/main.c:738:19: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  738 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:25:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   24 | #include "string.h"
+  +++ |+#include <stdio.h>
+   25 | /* USER CODE END Includes */
+../Core/Src/main.c:738:19: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  738 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:738:19: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+arm-none-eabi-gcc -o "Mod_Uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\gitrepo\Vi-Qi-FSK-Decode\Mod_Uart\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Mod_Uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Mod_Uart.elf
+ 
+arm-none-eabi-size  Mod_Uart.elf 
+arm-none-eabi-objdump -h -S Mod_Uart.elf  > "Mod_Uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  27068	     92	  84600	 111760	  1b490	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: Mod_Uart.list
+ 
+14:32:28 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  27068	     92	  84600	 111760	  1b490	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+14:47:30 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:128:18: warning: unused variable 'last_print' [-Wunused-variable]
+  128 |         uint32_t last_print = 0;
+      |                  ^~~~~~~~~~
+../Core/Src/main.c:127:14: warning: unused variable 'msg' [-Wunused-variable]
+  127 |         char msg[64];
+      |              ^~~
+../Core/Src/main.c: In function 'uart_dump_capture':
+../Core/Src/main.c:738:19: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  738 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:25:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   24 | #include "string.h"
+  +++ |+#include <stdio.h>
+   25 | /* USER CODE END Includes */
+../Core/Src/main.c:738:19: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  738 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:738:19: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+arm-none-eabi-gcc -o "Mod_Uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\gitrepo\Vi-Qi-FSK-Decode\Mod_Uart\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Mod_Uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Mod_Uart.elf
+ 
+arm-none-eabi-size  Mod_Uart.elf 
+arm-none-eabi-objdump -h -S Mod_Uart.elf  > "Mod_Uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  26900	     92	  84592	 111584	  1b3e0	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: Mod_Uart.list
+ 
+14:47:48 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  26900	     92	  84592	 111584	  1b3e0	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+14:47:52 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  26900	     92	  84592	 111584	  1b3e0	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+14:56:55 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  26900	     92	  84592	 111584	  1b3e0	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+15:46:01 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:128:18: warning: unused variable 'last_print' [-Wunused-variable]
+  128 |         uint32_t last_print = 0;
+      |                  ^~~~~~~~~~
+../Core/Src/main.c:127:14: warning: unused variable 'msg' [-Wunused-variable]
+  127 |         char msg[64];
+      |              ^~~
+../Core/Src/main.c: In function 'uart_dump_capture':
+../Core/Src/main.c:740:19: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  740 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:25:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   24 | #include "string.h"
+  +++ |+#include <stdio.h>
+   25 | /* USER CODE END Includes */
+../Core/Src/main.c:740:19: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  740 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:740:19: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+arm-none-eabi-gcc -o "Mod_Uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\gitrepo\Vi-Qi-FSK-Decode\Mod_Uart\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Mod_Uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Mod_Uart.elf
+ 
+arm-none-eabi-size  Mod_Uart.elf 
+arm-none-eabi-objdump -h -S Mod_Uart.elf  > "Mod_Uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  26916	     92	  84592	 111600	  1b3f0	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: Mod_Uart.list
+ 
+15:46:10 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  26916	     92	  84592	 111600	  1b3f0	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+15:47:38 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:128:18: warning: unused variable 'last_print' [-Wunused-variable]
+  128 |         uint32_t last_print = 0;
+      |                  ^~~~~~~~~~
+../Core/Src/main.c:127:14: warning: unused variable 'msg' [-Wunused-variable]
+  127 |         char msg[64];
+      |              ^~~
+../Core/Src/main.c: In function 'uart_dump_capture':
+../Core/Src/main.c:740:19: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  740 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:25:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   24 | #include "string.h"
+  +++ |+#include <stdio.h>
+   25 | /* USER CODE END Includes */
+../Core/Src/main.c:740:19: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  740 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:740:19: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+arm-none-eabi-gcc -o "Mod_Uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\gitrepo\Vi-Qi-FSK-Decode\Mod_Uart\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Mod_Uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Mod_Uart.elf
+ 
+arm-none-eabi-size  Mod_Uart.elf 
+arm-none-eabi-objdump -h -S Mod_Uart.elf  > "Mod_Uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  26916	     92	  84592	 111600	  1b3f0	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: Mod_Uart.list
+ 
+15:47:44 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  26916	     92	  84592	 111600	  1b3f0	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+16:04:20 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:128:18: warning: unused variable 'last_print' [-Wunused-variable]
+  128 |         uint32_t last_print = 0;
+      |                  ^~~~~~~~~~
+../Core/Src/main.c:127:14: warning: unused variable 'msg' [-Wunused-variable]
+  127 |         char msg[64];
+      |              ^~~
+../Core/Src/main.c: In function 'uart_dump_capture':
+../Core/Src/main.c:745:19: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  745 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:25:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   24 | #include "string.h"
+  +++ |+#include <stdio.h>
+   25 | /* USER CODE END Includes */
+../Core/Src/main.c:745:19: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  745 |         int len = snprintf(line, sizeof(line),
+      |                   ^~~~~~~~
+../Core/Src/main.c:745:19: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+arm-none-eabi-gcc -o "Mod_Uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\gitrepo\Vi-Qi-FSK-Decode\Mod_Uart\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Mod_Uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Mod_Uart.elf
+ 
+arm-none-eabi-size  Mod_Uart.elf 
+arm-none-eabi-objdump -h -S Mod_Uart.elf  > "Mod_Uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  26908	     92	  84592	 111592	  1b3e8	Mod_Uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: Mod_Uart.list
+ 
+16:04:42 **** Incremental Build of configuration Debug for project Mod_Uart ****
+make -j8 all 
+arm-none-eabi-size  Mod_Uart.elf 
+   text	   data	    bss	    dec	    hex	filename
+  26908	     92	  84592	 111592	  1b3e8	Mod_Uart.elf
+Finished building: default.size.stdout
  
