@@ -114,6 +114,9 @@ static void MX_USART1_UART_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+static int8_t active = 0;		// 0 = waiting for first edge
+static int8_t last_sign = 0;   // +1 or -1
+static uint32_t period_counter = 0;
 /* USER CODE END 0 */
 
 /**
@@ -183,6 +186,7 @@ int main(void)
 	generate_fsk_test();
     static uint32_t last_print = 0;
 
+//#ifdef DWT_DEBUG
     if (HAL_GetTick() - last_print > 1000)  // every 1 second
     {
         last_print = HAL_GetTick();
@@ -200,6 +204,7 @@ int main(void)
                           len,
                           HAL_MAX_DELAY);
     }
+//#endif
 	//Continuous mode: nothing required here
 	// Processing is done in DMA IRQ
 
@@ -489,6 +494,9 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PB2 */
@@ -496,6 +504,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : DebugIO0_Pin */
+  GPIO_InitStruct.Pin = DebugIO0_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(DebugIO0_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PA9 */
   GPIO_InitStruct.Pin = GPIO_PIN_9;
@@ -544,21 +559,7 @@ void start_capture(void)
 
 #else
 
-//    hdma_hrtim1_a.Init.Mode = DMA_CIRCULAR;
-//    HAL_DMA_Init(&hdma_hrtim1_a);
-
-    /* Enable Half Transfer interrupt */
-    __HAL_DMA_ENABLE_IT(&hdma_hrtim1_a, DMA_IT_HT);
-
-//    HAL_HRTIM_SimpleCaptureStart_DMA(
-//        &hhrtim1,
-//        HRTIM_TIMERINDEX_TIMER_A,
-//        HRTIM_CAPTUREUNIT_1,
-//		(uint32_t)&HRTIM1->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_A].CPT1xR,
-//        (uint32_t )hrtim_capture_buf,
-//        CAPTURE_SAMPLES
-//    );
-
+    //Half Transfer interrupt will be enabled by this function itself
     HAL_DMA_Start_IT(&hdma_hrtim1_a,
   		  (uint32_t)&HRTIM1->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_A].CPT1xR,
   		  (uint32_t)hrtim_capture_buf, CAPTURE_SAMPLES
@@ -590,13 +591,52 @@ void process_block(uint32_t start, uint32_t length)
         prev_timestamp = curr;
 
         uint32_t ma = moving_average_16(period);
+        int32_t diff = delayed_abs_diff(ma);
+        int32_t abs_diff = (diff >=0) ? diff : -diff;
 
-        uint32_t delta = delayed_abs_diff(ma);
 
-        if (delta > DELTA_MIN && delta < DELTA_MAX)
+
+        int8_t sign = 0;
+
+        if (diff > 0)	sign = 1;
+        else if (diff < 0)	sign = -1;
+
+        /* Valid transition condition */
+        if (abs_diff > DELTA_MIN && abs_diff < DELTA_MAX)
         {
-            HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
+            if (!active)
+            {
+                // First transition detected
+                active = 1;
+                last_sign = sign;
+                period_counter = 0;
+
+                HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
+            }
+            else
+            {
+                // Already counting — check if opposite sign
+                if (sign == -last_sign)
+                {
+                    // Opposite edge detected
+
+//                    record_period(period_counter);
+
+                    // Restart counting for next segment
+                    period_counter = 0;
+                    last_sign = sign;
+
+                    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
+                }
+            }
         }
+
+        /* If active, keep counting */
+        if (active)
+        {
+            period_counter++;
+        }
+
 
         // Example classification
 //        if (filtered < 20000)
@@ -630,17 +670,55 @@ void process_block(uint32_t start, uint32_t length)
         prev_timestamp = curr;
 
         uint32_t ma = moving_average_16(period);
-        uint32_t delta = delayed_abs_diff(ma);
+        int32_t diff = delayed_abs_diff(ma);
+        int32_t abs_diff = (diff >=0) ? diff : -diff;
 
-        if (delta > DELTA_MIN && delta < DELTA_MAX)
+
+
+        int8_t sign = 0;
+
+        if (diff > 0)	sign = 1;
+        else if (diff < 0)	sign = -1;
+
+        /* Valid transition condition */
+        if (abs_diff > DELTA_MIN && abs_diff < DELTA_MAX)
         {
-//            HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
-            toggle = !toggle;
+            if (!active)
+            {
+                // First transition detected
+                active = 1;
+                last_sign = sign;
+                period_counter = 0;
+                toggle = !toggle;
+            }
+            else
+            {
+                // Already counting — check if opposite sign
+                if (sign == -last_sign)
+                {
+                    // Opposite edge detected
+
+//                    record_period(period_counter);
+
+                    // Restart counting for next segment
+                    period_counter = 0;
+                    last_sign = sign;
+                    toggle = !toggle;
+                }
+            }
         }
+
+        /* If active, keep counting */
+        if (active)
+        {
+            period_counter++;
+        }
+
+//        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
 
         debug_buf[debug_index].period  = period;
         debug_buf[debug_index].ma      = ma;
-        debug_buf[debug_index].delta   = delta;
+        debug_buf[debug_index].delta   = abs_diff;
         debug_buf[debug_index].toggled = toggle;
 
         debug_index++;
@@ -798,10 +876,10 @@ static inline uint32_t moving_average_16(uint32_t new_value)
     return (uint32_t)(ma_sum >> 4);   // divide by 16
 }
 
-static inline uint32_t delayed_abs_diff(uint32_t new_ma)
+static inline int32_t delayed_abs_diff(uint32_t new_ma)
 {
-    uint32_t old_ma = 0;
-    uint32_t diff = 0;
+    int32_t old_ma = 0;
+//    uint32_t diff = 0;
 
     if (delay_filled < DELAY)
     {
@@ -822,12 +900,16 @@ static inline uint32_t delayed_abs_diff(uint32_t new_ma)
     if (delay_index >= DELAY)
         delay_index = 0;
 
+#if 0
     if (new_ma > old_ma)
         diff = new_ma - old_ma;
     else
         diff = old_ma - new_ma;
 
     return diff;
+#endif
+
+    return (new_ma - old_ma);	//signed difference
 }
 
 
@@ -868,7 +950,9 @@ void HAL_DMA_XferHalfCpltCallback(DMA_HandleTypeDef *hdma)
 	uint32_t start = DWT->CYCCNT;
     if (hdma == &hdma_hrtim1_a)
     {
+    	HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_SET);
         process_block(0, CAPTURE_SAMPLES / 2);
+        HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_RESET);
     }
     uint32_t end = DWT->CYCCNT;
 
@@ -895,7 +979,9 @@ void HAL_DMA_XferCpltCallback(DMA_HandleTypeDef *hdma)
 	uint32_t start = DWT->CYCCNT;
     if (hdma == &hdma_hrtim1_a)
     {
+//    	HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_SET);
         process_block(CAPTURE_SAMPLES / 2, CAPTURE_SAMPLES / 2);
+//        HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_RESET);
     }
     uint32_t end = DWT->CYCCNT;
 
