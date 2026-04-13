@@ -1,7 +1,15 @@
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
-configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Mod_Uart Debug
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:H7_FskDecoder_CM7 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:H7_FskDecoder_CM4 Debug
 eclipse.preferences.version=1
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:H7_FskDecoder_CM4\ Debug/activeLaunchMode=debug
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:H7_FskDecoder_CM4\ Debug/activeLaunchTarget=null\:---
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:H7_FskDecoder_CM7\ Debug/activeLaunchMode=debug
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Mod_Uart\ Debug/activeLaunchMode=debug
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Mod_Uart\ Debug/activeLaunchTarget=null\:---
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Mod_Uart\ Release/activeLaunchMode=debug
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:v_qi_i2c_CM4\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:v_qi_i2c_CM4\ Debug/activeLaunchTarget=null\:---
+org.eclipse.launchbar.core.descriptorType.default\:H7_FskDecoder_CM7\ Debug/activeLaunchMode=debug
+org.eclipse.launchbar.core.descriptorType.default\:H7_FskDecoder_CM7\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local

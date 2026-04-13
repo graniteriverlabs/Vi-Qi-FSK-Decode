@@ -1,0 +1,13 @@
+../Core/Src/qi.c:23:5:Qi_BuildPacket	7
+../Core/Src/qi.c:48:5:Qi_EncodeToSPI	6
+../Core/Src/qi.c:89:5:Qi_CreateSignalStrength	1
+../Core/Src/qi.c:93:5:Qi_CreateEndPowerTransfer	1
+../Core/Src/qi.c:97:5:Qi_CreateControlError	1
+../Core/Src/qi.c:101:5:Qi_CreateReceivedPower	1
+../Core/Src/qi.c:105:5:Qi_CreateChargeStatus	1
+../Core/Src/qi.c:109:5:Qi_CreateConfiguration	3
+../Core/Src/qi.c:116:5:Qi_CreateIdentification	3
+../Core/Src/qi.c:124:12:qi_write_preamble	2
+../Core/Src/qi.c:204:12:qi_write_bit	6
+../Core/Src/qi.c:242:12:qi_encode_byte	2
+../Core/Src/qi.c:294:12:qi_write_last_edge	5

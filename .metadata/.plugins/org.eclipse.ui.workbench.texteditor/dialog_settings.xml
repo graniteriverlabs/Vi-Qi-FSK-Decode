@@ -3,6 +3,16 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="(debug_index &gt;= CAPTURE_SAMPLES)"/>
+		<item value="hdr-&gt;sequence     = g_fsk_udp_sequence++;"/>
+		<item value="FSK_UDP_MAGIC"/>
+		<item value="record_count"/>
+		<item value="toggled"/>
+		<item value="RAM_D2_IPC"/>
+		<item value="bsd_initialize"/>
+		<item value="bsd_ini"/>
+		<item value="printf"/>
+		<item value="last_print"/>
 		<item value="GPIO"/>
 	</list>
 </section>

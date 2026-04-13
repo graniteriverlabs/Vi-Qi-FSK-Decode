@@ -13,10 +13,26 @@
 			<item value=""/>
 		</list>
 		<section name="ExternalProjectImportWizard.dialogBounds">
-			<item key="DIALOG_X_ORIGIN" value="619"/>
-			<item key="DIALOG_Y_ORIGIN" value="147"/>
-			<item key="DIALOG_WIDTH" value="700"/>
+			<item key="DIALOG_X_ORIGIN" value="843"/>
+			<item key="DIALOG_Y_ORIGIN" value="282"/>
+			<item key="DIALOG_WIDTH" value="732"/>
 			<item key="DIALOG_HEIGHT" value="861"/>
+			<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+		</section>
+	</section>
+	<section name="SmartImportWizard">
+		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
+		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
+		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="D:\gitrepo\Vi-Qi-FSK-Decode\WS_SPI_CM4\v_qi_i2c"/>
+		</list>
+		<section name="SmartImportWizard.dialogBounds">
+			<item key="DIALOG_X_ORIGIN" value="843"/>
+			<item key="DIALOG_Y_ORIGIN" value="282"/>
+			<item key="DIALOG_WIDTH" value="1299"/>
+			<item key="DIALOG_HEIGHT" value="847"/>
 			<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
 		</section>
 	</section>

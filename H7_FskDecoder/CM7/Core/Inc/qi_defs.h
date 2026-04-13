@@ -1,0 +1,126 @@
+/*
+ * grl_defs.h
+ *
+ *  Created on: Feb 4, 2026
+ *      Author: GRL
+ */
+
+#ifndef INC_QI_DEFS_H_
+#define INC_QI_DEFS_H_
+#include "main.h"
+
+#define FW_MAJOR_VERSION      1
+#define FW_MINOR_VERSION      3
+#define FW_SUB_MINOR_VERSION  2
+
+#define TCP_CHUNK_SIZE  256u
+
+#define CM7_Core		0
+#define CM4_Core		1
+
+#define API_QUEUE_SIZE  	16
+#define API_MAX_LEN		TCP_CHUNK_SIZE
+#define QI_READ_LEN            6u        // reads 0x0104..0x0109 (I at 0x0108 -> bytes[4..5])
+
+#define API_RX_EVT		(1UL << 0)
+#define CM4_INTR		(1UL << 1)
+#define OTA_ARM_EVT      (1UL << 8)
+#define OTA_STOP_EVT     (1UL << 9)
+
+#define I2C_EVT_RX_DONE   (1u << 0)
+#define I2C_EVT_ERROR  	  (1u << 1)
+#define I2C_EVT_TX_DONE  	  (1u << 2)
+#define I2C_EVT_Q_AVAIL		(1u << 3)
+
+#define Get_Cmd			1
+#define Set_Cmd			7
+
+#define HSEM_CM7_TO_CM4   1
+#define HSEM_CM4_TO_CM7   2
+
+
+#define MAX_LINES     24
+#define MAX_LINE_LEN  100
+#define MAX_API_BUFFER_LEN  256
+#define POLL_STATUS_OK        0x00
+#define POLL_STATUS_NO_DATA   0xFE
+#define POLL_STATUS_ERROR     0xFF
+
+/* -------- USER CONFIG -------- */
+#define UART4_DMA_RX_BUF_SZ   128u    // scratch DMA buffer capacity (>= 64)
+#define PKT_MAX_PAYLOAD       256u     // your requirement
+#define PKT_RING_CAP          14u     // configurable (14 packets)(0x0F - 1)
+#define NO_QUEUE_DATA	0x00
+#define VALID_QUEUE_DATA	0x01
+
+#define CPS_SLAVE_ADDR		(0x30<<1)
+#define REG_V_RECT			0x0104
+#define REG_I_RECT			0x0108
+
+
+/**
+ * @brief Decodes a 16-bit length value from a receive buffer using little-endian format
+ * @param rxBuf Pointer to the receive buffer where length bytes are stored
+ * @return uint16_t The decoded 16-bit length value (rxBuf[1] is LSB, rxBuf[2] is MSB)
+ * @note Assumes rxBuf has at least 3 bytes available (indices 0, 1, 2)
+ */
+#define API_LENGTH_DECODE(rxBuf)    ((uint16_t)(rxBuf[1]) | ((uint16_t)(rxBuf[2] << 8)))
+
+/**
+ * @brief Encodes a 16-bit length value into a receive buffer using little-endian format
+ * @param rxBuf Pointer to the receive buffer where length bytes will be stored
+ * @param len The 16-bit length value to encode
+ * @note Stores LSB in rxBuf[1] and MSB in rxBuf[2]
+ * @note Assumes rxBuf has at least 3 bytes available (indices 0, 1, 2)
+ */
+#define API_LENGTH_ENCODE(rxBuf, len) do { \
+    rxBuf[1] = (uint8_t)(len & 0xFF);       \
+    rxBuf[2] = (uint8_t)((len >> 8) & 0xFF);\
+} while(0)
+
+
+#define PUT_U32_LE(buf, idx, v) do {          \
+  (buf)[(idx)++] = (uint8_t)((v) & 0xFFu);    \
+  (buf)[(idx)++] = (uint8_t)(((v) >> 8) & 0xFFu);  \
+  (buf)[(idx)++] = (uint8_t)(((v) >> 16) & 0xFFu); \
+  (buf)[(idx)++] = (uint8_t)(((v) >> 24) & 0xFFu); \
+} while(0)
+
+/* Pack 16-bit value into buffer in little-endian: LSB then MSB */
+#define PUT_U16_LE(buf, idx, val)              \
+    do {                                       \
+        (buf)[(idx)++] = (uint8_t)((val) & 0xFFu);       \
+        (buf)[(idx)++] = (uint8_t)(((val) >> 8) & 0xFFu);\
+    } while (0)
+
+#define PUT_U8(buf, idx, val)              \
+    do {                                       \
+        (buf)[(idx)++] = (uint8_t)((val) & 0xFFu);       \
+    } while (0)
+
+
+
+/* ---------------- POLL response helpers ---------------- */
+#define DATA_VALIDITY_CDWORD_FILL(buf, idx, status)	\
+	do{												\
+		(buf)[(idx)++] = (uint8_t)(status);  		\
+	}while(0)
+
+/* Header: high nibble = read index, low nibble = flags/status */
+#define UART_QUEUE_IDX_FILL(buf, idx, rd_idx, wr_idx)       \
+    do {                                              \
+        (buf)[(idx)] = (uint8_t)(((rd_idx) & 0x0Fu) << 4); \
+        (buf)[(idx)++] |= (uint8_t)((wr_idx) & 0x0Fu);  \
+    } while (0)
+
+/* Fill N bytes with POLL_STATUS_NO_DATA */
+#define POLL_FILL_NO_DATA(buf, idx, count)            \
+    do {                                              \
+        for (uint8_t _i = 0; _i < (count); _i++)      \
+        {                                             \
+            (buf)[(idx)++] = POLL_STATUS_NO_DATA;     \
+        }                                             \
+    } while (0)
+
+
+#endif /* INC_QI_DEFS_H_ */

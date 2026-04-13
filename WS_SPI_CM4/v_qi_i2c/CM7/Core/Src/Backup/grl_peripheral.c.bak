@@ -1,0 +1,298 @@
+#include "stm32h7xx_hal.h"
+#include <string.h>
+#include <stdint.h>
+#include "grl_peripheral.h"
+#include "grl_enum.h"
+
+/* If D-Cache is enabled on CM7 (very likely), set this to 1 */
+#ifndef UART4_RX_DCACHE_ENABLED
+#define UART4_RX_DCACHE_ENABLED  1
+#endif
+
+
+typedef struct {
+  uint32_t ts_ms;   // when VI sample completed (HAL_GetTick)
+  uint16_t r_v;       // rectified voltage
+  uint16_t r_i;       // rectified current
+//  uint32_t seq;     // increments per successful sample
+//  uint32_t errs;    // cumulative I2C errors
+} grl_vi_sample_t;
+
+
+static volatile grl_vi_sample_t g_vi = {0};
+
+/* -------- Extern from your project -------- */
+extern UART_HandleTypeDef huart4;
+
+/* -------- Packet ring buffer -------- */
+static volatile uint8_t g_pkt_w = 0;
+static volatile uint8_t g_pkt_r = 0;
+uart4_pkt_t g_pkt_ring[PKT_RING_CAP];
+#define VI_READ_LEN            6u        // reads 0x0104..0x0109 (I at 0x0108 -> bytes[4..5])
+
+/* DMA RX scratch buffer in D2 SRAM (NOLOAD section), 32-byte aligned */
+__attribute__((section(".Uart4DmaSection"), aligned(32)))
+static uint8_t g_uart4_dma_rx[UART4_DMA_RX_BUF_SZ];
+
+//__attribute__((section(".I2C4DmaSection"), aligned(32)))
+/* ---- DMA RX buffer (consider placing in non-cacheable memory) ---- */
+static uint8_t g_vi_raw[VI_READ_LEN];
+
+/* Cache line size on STM32H7 CM7 is 32 bytes */
+//#define DCACHE_LINE_SZ 32u
+
+static inline uint32_t align_down_u32(uint32_t x, uint32_t a) { return x & ~(a - 1u); }
+static inline uint32_t align_up_u32  (uint32_t x, uint32_t a) { return (x + (a - 1u)) & ~(a - 1u); }
+
+static inline grl_vi_sample_t grl_vi_get_snapshot(void)
+{
+  grl_vi_sample_t s;
+
+  uint32_t primask = __get_PRIMASK();
+  __disable_irq();
+  s = g_vi;
+  if (!primask) __enable_irq();
+
+  return s;
+}
+
+#define DISCARD_OLD_STORE_NEW	1
+#if DISCARD_OLD_STORE_NEW
+/* Drop policy: drop OLD packet if ring full */
+static int pkt_ring_push(const uint8_t *data, uint16_t len, uint32_t ts_ms)
+{
+  if (len > PKT_MAX_PAYLOAD) {
+    len = PKT_MAX_PAYLOAD;
+  }
+  grl_vi_sample_t vi = grl_vi_get_snapshot(); // snapshot latest V/I
+
+  uint16_t next = (uint16_t)((g_pkt_w + 1u) % PKT_RING_CAP);
+
+  if (next == g_pkt_r) {
+    /* Ring full → drop OLDEST packet */
+    g_pkt_r = (uint16_t)((g_pkt_r + 1u) % PKT_RING_CAP);
+  }
+
+
+  g_pkt_ring[g_pkt_w].uart_ts_ms = ts_ms;
+  g_pkt_ring[g_pkt_w].len = len;
+  memcpy(g_pkt_ring[g_pkt_w].data, data, len);
+
+  g_pkt_ring[g_pkt_w].rv_ri_ts_ms = vi.ts_ms;
+  g_pkt_ring[g_pkt_w].rv = vi.r_v;
+  g_pkt_ring[g_pkt_w].ri = vi.r_i;
+  g_pkt_w = next;
+
+  return 1;
+}
+#else
+/* Drop policy: drop NEW packet if ring full */
+static int pkt_ring_push(const uint8_t *data, uint16_t len, uint32_t ts_ms)
+{
+  if (len > PKT_MAX_PAYLOAD) len = PKT_MAX_PAYLOAD;
+
+  uint16_t next = (uint16_t)((g_pkt_w + 1u) % PKT_RING_CAP);
+  if (next == g_pkt_r) {
+    return 0; // full -> drop newest
+  }
+
+  grl_vi_sample_t vi = grl_vi_get_snapshot(); // snapshot latest V/I
+
+  g_pkt_ring[g_pkt_w].ts_ms = ts_ms;
+  g_pkt_ring[g_pkt_w].len = len;
+  memcpy(g_pkt_ring[g_pkt_w].data, data, len);
+  g_pkt_w = next;
+  return 1;
+}
+#endif
+
+int UART4_PktRing_Pop(uart4_pkt_t *out, uint8_t *read_idx, uint8_t *wr_idx)
+{
+	int ok = 0;
+
+	uint32_t primask = __get_PRIMASK();
+	__disable_irq();
+
+	*read_idx = (uint8_t)g_pkt_r;
+	*wr_idx = (uint8_t)g_pkt_w;
+
+
+//  if (g_pkt_r == g_pkt_w) return 0;
+
+
+	if (g_pkt_r != g_pkt_w)
+	{
+		*out = g_pkt_ring[g_pkt_r];
+		g_pkt_r = (uint16_t)((g_pkt_r + 1u) % PKT_RING_CAP);
+		ok = 1;
+	}
+	if (!primask) __enable_irq();
+
+	return ok;
+}
+
+void UART4_StartRxToIdle(void)
+{
+	if (huart4.hdmarx == NULL) {
+		Error_Handler(); // DMA not linked in MSP init
+	}
+	// Force stop previous RX (IT/DMA/IDLE) so HAL won't return BUSY
+	(void)HAL_UART_AbortReceive(&huart4);
+
+	// Clear sticky UART error flags (ORE can block reception)
+	__HAL_UART_CLEAR_OREFLAG(&huart4);
+	__HAL_UART_CLEAR_NEFLAG(&huart4);
+	__HAL_UART_CLEAR_FEFLAG(&huart4);
+	__HAL_UART_CLEAR_PEFLAG(&huart4);
+
+	/* Start RX to IDLE DMA (variable-length packets) */
+	if (HAL_UARTEx_ReceiveToIdle_DMA(&huart4, g_uart4_dma_rx, UART4_DMA_RX_BUF_SZ) != HAL_OK) {
+		Error_Handler();
+	}
+
+  /* Reduce interrupt load: disable Half Transfer interrupt */
+  if (huart4.hdmarx != NULL) {
+    __HAL_DMA_DISABLE_IT(huart4.hdmarx, DMA_IT_HT);
+  }
+}
+
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
+{
+  if (huart->Instance == UART4)
+  {
+    if (Size > 0u)
+    {
+        uint32_t ts_ms = HAL_GetTick();
+
+      /* Push packet (truncate to 64 if needed) */
+      (void)pkt_ring_push(g_uart4_dma_rx, Size,ts_ms);
+
+    }
+
+    /* Restart for next burst */
+    UART4_StartRxToIdle();
+  }
+}
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+{
+  if (huart->Instance == UART4)
+  {
+    __HAL_UART_CLEAR_OREFLAG(huart);
+    __HAL_UART_CLEAR_NEFLAG(huart);
+    __HAL_UART_CLEAR_FEFLAG(huart);
+    __HAL_UART_CLEAR_PEFLAG(huart);
+
+    HAL_UART_AbortReceive(huart);
+    UART4_StartRxToIdle();
+  }
+}
+
+void Uart4_ProcessPackets(void)
+{
+  uart4_pkt_t p;uint8_t read_idx = 0,wr_idx = 0;
+  while (UART4_PktRing_Pop(&p, &read_idx, &wr_idx))
+  {
+    // p.data[0..p.len-1] contains one packet (up to 64)
+    // TODO: decode ASK/FSK, validate header/CRC etc.
+  }
+}
+#ifdef UART_WRITE_EN
+static volatile uint8_t g_uart4_tx_busy = 0;
+static uint8_t counter;
+
+void UART4_PoC_RxTxBridge_Poll(void)
+{
+  static uart4_pkt_t p;
+
+  if (g_uart4_tx_busy) return;
+
+  // Build a known pattern
+  p.data[0] = 0xAA;
+  p.data[1] = 0x55;
+
+  // Fill next 58 bytes with counter (total so far 60 bytes: 0..59)
+  memset(&p.data[2], counter, 58);
+
+  // Add CRLF at the end
+  p.data[60] = '\r';
+  p.data[61] = '\n';
+
+  p.len = 62;               // bytes 0..61
+
+  counter++;
+
+  g_uart4_tx_busy = 1;
+  if (HAL_UART_Transmit_DMA(&huart4, p.data, p.len) != HAL_OK)
+  {
+    g_uart4_tx_busy = 0;
+  }
+}
+#endif
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+  if (huart->Instance == UART4)
+  {
+//    g_uart4_tx_busy = 0;
+  }
+}
+
+
+
+
+/**I2C*/
+extern I2C_HandleTypeDef hi2c4;
+#define CPS_SLAVE_ADDR		(0x30<<1)
+#define REG_V_RECT			0x0104
+
+static int err_hits;
+
+static inline uint16_t U16_LE(const uint8_t *p)
+{
+  return (uint16_t)(p[0] | ((uint16_t)p[1] << 8)); // change if BE
+}
+uint8_t g_i2c_busy;
+void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c)
+{
+  if (hi2c->Instance == I2C4)
+  {
+	  g_i2c_busy = 0;
+		grl_vi_sample_t s;
+		s.ts_ms = HAL_GetTick();
+		s.r_v     = U16_LE(&g_vi_raw[0]);   // 0x0104..05
+		s.r_i     = U16_LE(&g_vi_raw[4]);   // 0x0108..09
+		//		s.seq   = ++g_vi_seq;
+		//		s.errs  = g_vi_errs;
+		g_vi = s;
+  }
+}
+
+void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c)
+{
+  if (hi2c->Instance == I2C4)
+  {
+    err_hits++;
+    g_i2c_busy = 0;
+  }
+}
+void grl_rv_ri_i2c_read_init(uint8_t RB){
+
+	 if (g_i2c_busy) return;
+
+	  g_i2c_busy = 1;
+
+	if (HAL_I2C_Mem_Read_DMA(&hi2c4,
+								CPS_SLAVE_ADDR,
+								REG_V_RECT,
+								I2C_MEMADD_SIZE_16BIT,
+								g_vi_raw,
+								RB) != HAL_OK){
+		err_hits++;
+		volatile HAL_I2C_StateTypeDef s = HAL_I2C_GetState(&hi2c4);
+		volatile uint32_t e = HAL_I2C_GetError(&hi2c4);
+		(void)s; (void)e;
+	}else{
+
+	}
+}
+
+

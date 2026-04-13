@@ -1,0 +1,4 @@
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_serverhello_extensions.c:107:6:_nx_secure_tls_send_serverhello_extensions	8
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_serverhello_extensions.c:272:13:_nx_secure_tls_send_serverhello_sec_reneg_extension	5
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_serverhello_extensions.c:436:13:_nx_secure_tls_send_serverhello_supported_versions_extension	2
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_serverhello_extensions.c:545:13:_nx_secure_tls_send_serverhello_key_share_extension	6

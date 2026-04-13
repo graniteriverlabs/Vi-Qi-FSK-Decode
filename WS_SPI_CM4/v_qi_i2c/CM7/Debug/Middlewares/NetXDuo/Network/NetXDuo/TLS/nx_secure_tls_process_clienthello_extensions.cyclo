@@ -1,0 +1,7 @@
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_process_clienthello_extensions.c:110:6:_nx_secure_tls_process_clienthello_extensions	23
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_process_clienthello_extensions.c:337:13:_nx_secure_tls_proc_clienthello_sec_reneg_extension	11
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_process_clienthello_extensions.c:505:6:_nx_secure_tls_proc_clienthello_sec_sa_extension	32
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_process_clienthello_extensions.c:780:13:_nx_secure_tls_proc_clienthello_keyshare_extension	20
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_process_clienthello_extensions.c:1032:13:_nx_secure_tls_proc_clienthello_supported_versions_extension	6
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_process_clienthello_extensions.c:1130:13:_nx_secure_tls_proc_clienthello_signature_algorithms_extension	15
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_process_clienthello_extensions.c:1270:6:_nx_secure_tls_get_signature_algorithm_id	19

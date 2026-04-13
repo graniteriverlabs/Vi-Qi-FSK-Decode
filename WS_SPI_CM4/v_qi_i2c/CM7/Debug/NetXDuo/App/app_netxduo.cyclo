@@ -1,0 +1,11 @@
+../NetXDuo/App/app_netxduo.c:138:6:MX_NetXDuo_Init	20
+../NetXDuo/App/app_netxduo.c:459:13:ip_address_change_notify_callback	1
+../NetXDuo/App/app_netxduo.c:472:6:print_mac	1
+../NetXDuo/App/app_netxduo.c:478:6:boot_time_fw_info	1
+../NetXDuo/App/app_netxduo.c:545:6:grl_mg_init	1
+../NetXDuo/App/app_netxduo.c:567:6:print_dhcp_times	7
+../NetXDuo/App/app_netxduo.c:621:6:tx_stack_error_handler	1
+../NetXDuo/App/app_netxduo.c:638:13:on_disconnect	2
+../NetXDuo/App/app_netxduo.c:652:6:dump_packet_pool	1
+../NetXDuo/App/app_netxduo.c:679:6:log_send_event	1
+../NetXDuo/App/app_netxduo.c:692:13:App_TCP_Thread_Entry	8

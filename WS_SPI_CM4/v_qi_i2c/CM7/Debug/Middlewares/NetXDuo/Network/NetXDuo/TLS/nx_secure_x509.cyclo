@@ -1,0 +1,13 @@
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:113:6:_nx_secure_x509_certificate_parse	10
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:299:13:_nx_secure_x509_extract_oid_data	16
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:492:13:_nx_secure_x509_parse_cert_data	15
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:698:13:_nx_secure_x509_parse_version	4
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:788:13:_nx_secure_x509_parse_serial_num	4
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:875:13:_nx_secure_x509_parse_signature_algorithm	9
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:1000:13:_nx_secure_x509_parse_issuer	4
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:1083:13:_nx_secure_x509_parse_validity	12
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:1207:13:_nx_secure_x509_parse_subject	4
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:1292:13:_nx_secure_x509_parse_public_key	14
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:1479:13:_nx_secure_x509_parse_unique_ids	11
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:1625:13:_nx_secure_x509_parse_extensions	8
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/nx_secure/src/nx_secure_x509.c:1749:13:_nx_secure_x509_parse_signature_data	4

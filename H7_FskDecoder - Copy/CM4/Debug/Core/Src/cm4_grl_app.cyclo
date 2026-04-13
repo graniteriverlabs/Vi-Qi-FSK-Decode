@@ -1,0 +1,4 @@
+../Core/Src/cm4_grl_app.c:38:6:fw_version_fetch	2
+../Core/Src/cm4_grl_app.c:63:6:get_system_details_handler	2
+../Core/Src/cm4_grl_app.c:73:6:get_cmd_handler	2
+../Core/Src/cm4_grl_app.c:84:6:process_app_cmd	4

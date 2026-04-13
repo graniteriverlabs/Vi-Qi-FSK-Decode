@@ -1,0 +1,2 @@
+../Core/Src/fsk_stream_test.c:14:6:fsk_stream_test_init	1
+../Core/Src/fsk_stream_test.c:19:6:fsk_stream_test_emit	8

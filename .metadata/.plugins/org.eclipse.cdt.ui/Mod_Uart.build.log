@@ -1,10 +1,10 @@
-19:55:55 **** Incremental Build of configuration Debug for project Mod_Uart ****
+22:28:37 **** Incremental Build of configuration Debug for project Mod_Uart ****
 make -j8 all 
 arm-none-eabi-size  Mod_Uart.elf 
    text	   data	    bss	    dec	    hex	filename
-  26648	     92	  10860	  37600	   92e0	Mod_Uart.elf
+  15780	     12	   4636	  20428	   4fcc	Mod_Uart.elf
 Finished building: default.size.stdout
  
 
-19:55:56 Build Finished. 0 errors, 0 warnings. (took 914ms)
+22:28:37 Build Finished. 0 errors, 0 warnings. (took 331ms)
 

@@ -1,0 +1,446 @@
+/*
+ * grl_app.c
+ *
+ *  Created on: Jan 21, 2026
+ *      Author: GRL
+ */
+#include <cm7_grl_app.h>
+#include "main.h"
+#include "ipc_shared.h"
+#include "app_netxduo.h"
+#include "grl_enum.h"
+#include "grl_peripheral.h"
+#include "grl_defs.h"
+#include "grl_tim.h"
+
+uint8_t  api_buf[API_QUEUE_SIZE][API_MAX_LEN];
+volatile uint8_t api_len[API_QUEUE_SIZE];
+volatile uint8_t api_wr_idx = 0;
+volatile uint8_t api_rd_idx = 0;
+extern NX_TCP_SOCKET TCPSocket;
+extern NX_PACKET_POOL NxAppPool;
+uint16_t Data_length;
+TX_EVENT_FLAGS_GROUP ApiEventFlags;
+uint8_t ltx_buffer[API_MAX_LEN];
+volatile uint8_t api_rx;
+
+extern TX_EVENT_FLAGS_GROUP ApiEventFlags;
+
+
+/**
+ * @brief Enqueues data into the API queue buffer.
+ *
+ * Attempts to add a new message to the API queue. The function validates
+ * the input length, checks for queue overflow, and copies the data to
+ * the queue buffer if space is available.
+ *
+ * @param buf Pointer to the data buffer to enqueue. Must not be NULL.
+ * @param len Length of the data in bytes. Must be greater than 0 and
+ *            not exceed API_MAX_LEN.
+ *
+ * @return 0 on successful enqueue operation.
+ * @return -1 if the length is invalid (0 or exceeds API_MAX_LEN) or
+ *            if the queue is full (buffer overflow condition detected).
+ *
+ * @note This function is not thread-safe. Caller must provide
+ *       synchronization if used in multi-threaded context.
+ * @note API_QUEUE_SIZE must be defined as the circular queue capacity.
+ * @note API_MAX_LEN must be defined as the maximum allowed message length.
+ */
+int api_enqueue(const uint8_t *buf, uint16_t len)
+ {
+     uint8_t next;
+
+     /* validate length */
+     if (len == 0 || len > API_MAX_LEN)
+         return -1;
+
+     /* calculate next write index */
+     next = (api_wr_idx + 1U) % API_QUEUE_SIZE;
+
+     /* check buffer full */
+     if (next == api_rd_idx)
+         return -1;
+
+     /* copy data */
+     memcpy(api_buf[api_wr_idx], buf, len);
+     api_len[api_wr_idx] = len;
+
+     /* commit write */
+     api_wr_idx = next;
+
+     return 0;
+ }
+
+
+/**
+ * @brief Dequeues data from the API queue buffer.
+ * 
+ * Removes the oldest entry from the API queue and copies its contents
+ * to the provided output buffer. Updates the read index to point to the
+ * next queued entry.
+ * 
+ * @param[out] out_buf Pointer to buffer where dequeued data will be copied.
+ *                      Must be large enough to hold the queued data.
+ * @param[out] out_len Pointer to variable that will receive the length of
+ *                      the dequeued data in bytes.
+ * 
+ * @return 0 on successful dequeue, -1 if queue is empty.
+ * 
+ * @note Ensure out_buf has sufficient capacity before calling this function.
+ * @note This function assumes api_buf, api_len, api_rd_idx, and api_wr_idx
+ *       are properly initialized.
+ * @note API_QUEUE_SIZE must be defined as the maximum number of queue entries.
+ */
+int api_dequeue(uint8_t *out_buf, uint16_t *out_len)
+ {
+     /* check buffer empty */
+     if (api_rd_idx == api_wr_idx)
+         return -1;
+
+     /* fetch data */
+     *out_len = api_len[api_rd_idx];
+     memcpy(out_buf, api_buf[api_rd_idx], *out_len);
+
+     /* advance read index */
+     api_rd_idx = (api_rd_idx + 1U) % API_QUEUE_SIZE;
+
+     return 0;
+ }
+
+/**
+ * @brief Sends a TCP response packet with the provided data.
+ *
+ * @param buf       Pointer to the data buffer to be sent. Must not be NULL.
+ * @param len       Length of the data in bytes. Must be greater than 0.
+ * @param wait_ticks Timeout value in ticks for packet allocation and send operations.
+ *
+ * @return UINT Status code indicating the result of the operation.
+ *         - NX_SUCCESS: Packet was successfully sent.
+ *         - NX_INVALID_PARAMETERS: If buf is NULL or len is 0.
+ *         - Other status codes from nx_packet_allocate(), nx_packet_data_append(),
+ *           or nx_tcp_socket_send() on failure.
+ *
+ * @note The packet is automatically released on error. On success, the NetX Duo
+ *       stack manages the packet lifecycle.
+ */
+UINT tcp_send_response(const UCHAR *buf, USHORT len, ULONG wait_ticks)
+{
+    NX_PACKET *txp;
+    UINT status;
+
+    if ((buf == NX_NULL) || (len == 0))
+        return NX_INVALID_PARAMETERS;
+
+    status = nx_packet_allocate(&NxAppPool, &txp, NX_TCP_PACKET, wait_ticks);
+    if (status != NX_SUCCESS)
+        return status;
+
+    status = nx_packet_data_append(txp, (VOID *)buf, len, &NxAppPool, wait_ticks);
+    if (status != NX_SUCCESS)
+    {
+        nx_packet_release(txp);
+        return status;
+    }
+
+    status = nx_tcp_socket_send(&TCPSocket, txp, wait_ticks);
+    if (status != NX_SUCCESS)
+    {
+        nx_packet_release(txp);
+        return status;
+    }
+
+    return NX_SUCCESS;
+}
+
+/**
+ * @brief This function fetches the FW version based on controller type
+ * 
+ * @param aRxBuffer 
+ */
+void fw_version_fetch(uint8_t *aRxBuffer){
+
+	uint16_t l = API_LENGTH_DECODE(aRxBuffer);
+
+	switch((controllerType_e)aRxBuffer[8]){
+		case CONTROLLLER_UNIT://CM7 FW version Fetch
+			aRxBuffer[l++] = FW_MAJOR_VERSION;
+			aRxBuffer[l++] = FW_MINOR_VERSION;
+			aRxBuffer[l++] = FW_SUB_MINOR_VERSION;
+
+			API_LENGTH_ENCODE(aRxBuffer,l);
+
+			tcp_send_response(aRxBuffer,l,(2 * NX_IP_PERIODIC_RATE));
+		break;
+		case ELOAD_UNIT://CM4 FW version Fetch
+		    cm7_send_to_cm4(aRxBuffer, API_LENGTH_DECODE(aRxBuffer));
+		break;
+		case QI_UNIT:
+		break;
+		case DISPLAY_UNIT:
+		break;
+		case ALL_UNITS:
+		break;
+	}
+}
+
+void cps_fetch_rectifier_V_I(uint16_t *r_v, uint16_t *r_i){
+
+	//to do: perform i2c fetch operation for rectified voltage and current here
+	*r_v = 15000;
+	*r_i = 500;
+}
+
+
+#if 1
+void polling_data_decode(uint8_t *aRxBuffer){
+	uint16_t l = API_LENGTH_DECODE(aRxBuffer);
+//	uint16_t pkt_len = 0;
+	uart4_pkt_t g_poll_ring;
+	uint16_t r_v = 0, r_i = 0;
+	uint8_t rd_idx = 0, wr_idx = 0;
+
+	cps_fetch_rectifier_V_I(&r_v, &r_i);
+
+    /* rectified voltage + current (LE16 each) */
+    PUT_U16_LE(aRxBuffer, l, r_v);
+    PUT_U16_LE(aRxBuffer, l, r_i);
+
+	if(UART4_PktRing_Pop(&g_poll_ring, &rd_idx, &wr_idx)){
+
+		UART_QUEUE_IDX_FILL(aRxBuffer, l, rd_idx, wr_idx);
+		DATA_VALIDITY_CDWORD_FILL(aRxBuffer, l,VALID_QUEUE_DATA);
+
+		// [ts_ms:4][len:2][payload:len]
+		PUT_U32_LE(aRxBuffer, l, g_poll_ring.uart_ts_ms);
+		PUT_U16_LE(aRxBuffer, l, g_poll_ring.len);
+
+		if (g_poll_ring.len > 0u)
+		{
+			memcpy(&aRxBuffer[l], g_poll_ring.data, g_poll_ring.len);
+			l += g_poll_ring.len;
+		}
+//		pkt_len = g_poll_ring.len + 4 + 2;//4B for timestamp and 2B for length, we cant use sizeof() here because of structure padding
+//		memcpy(&aRxBuffer[l], &g_poll_ring, pkt_len);
+//		l += pkt_len;
+//		sentindex++;
+		API_LENGTH_ENCODE(aRxBuffer,l);
+		tcp_send_response(aRxBuffer,l,(2 * NX_IP_PERIODIC_RATE));
+	}else{
+
+		UART_QUEUE_IDX_FILL(aRxBuffer, l, rd_idx, wr_idx);
+		DATA_VALIDITY_CDWORD_FILL(aRxBuffer, l,NO_QUEUE_DATA);
+		POLL_FILL_NO_DATA(aRxBuffer, l, 4);
+
+		printf("POLLING INFO: no UART data\n");
+
+		API_LENGTH_ENCODE(aRxBuffer, l);
+		tcp_send_response(aRxBuffer, l, (2 * NX_IP_PERIODIC_RATE));
+		return;
+	}
+}
+#else
+static int sentindex;
+void polling_data_decode(uint8_t *aRxBuffer)
+{
+	extern uint8_t Arr[MAX_LINES][MAX_LINE_LEN];
+	extern volatile uint16_t lineIndex;
+	uint16_t l = API_LENGTH_DECODE(aRxBuffer);
+
+	if (aRxBuffer == NULL)
+	    {
+	        printf("POLLING ERR: NULL buffer\n");
+	        return;
+	    }
+
+	if (sentindex >= MAX_LINES)
+	{
+		printf("POLLING WARN: sentindex wrap\n");
+        aRxBuffer[l++] = POLL_STATUS_ERROR;
+        API_LENGTH_ENCODE(aRxBuffer, l);
+        tcp_send_response(aRxBuffer, l, (2 * NX_IP_PERIODIC_RATE));
+        sentindex = 0;
+		return;
+	}
+
+	if (sentindex == lineIndex)
+	{
+		printf("POLLING INFO: no UART data\n");
+        aRxBuffer[l++] = POLL_STATUS_NO_DATA;
+        API_LENGTH_ENCODE(aRxBuffer, l);
+        tcp_send_response(aRxBuffer, l, (2 * NX_IP_PERIODIC_RATE));
+		return;
+	}
+
+    if ((l + MAX_LINE_LEN) > MAX_API_BUFFER_LEN)
+    {
+        printf("POLLING ERR: API buffer overflow\n");
+        aRxBuffer[l++] = POLL_STATUS_ERROR;
+        API_LENGTH_ENCODE(aRxBuffer, l);
+        tcp_send_response(aRxBuffer, l, (2 * NX_IP_PERIODIC_RATE));
+        return;
+    }
+
+
+	memcpy(&aRxBuffer[l], &Arr[sentindex++][0], MAX_LINE_LEN);
+	l += MAX_LINE_LEN;
+
+	API_LENGTH_ENCODE(aRxBuffer,l);
+	tcp_send_response(aRxBuffer,l,(2 * NX_IP_PERIODIC_RATE));
+}
+#endif
+void get_system_details_handler(uint8_t *aRxBuffer){
+	uint8_t lParType = aRxBuffer[7];
+//	uint8_t lsubParType = aRxBuffer[8];
+	switch((sys_details_e)lParType){
+		case SYS_FW_VERSION:
+			fw_version_fetch(aRxBuffer);
+		break;
+		case POLLING_DATA:
+			polling_data_decode(aRxBuffer);
+			break;
+	}
+}
+/**
+ * @brief Get the cmd handler object for processing GET commands
+ * 
+ * @param aRxBuffer : incoming API buffer
+ */
+void get_cmd_handler(uint8_t *aRxBuffer){
+
+	uint8_t lFuncType = aRxBuffer[5];
+	switch((func_type_e)lFuncType){
+		case POWER_MGMT:
+			break;
+		case QI_PKT_MSKG:
+			break;
+		case QI_PKT_CGF:
+			break;
+		case QI_PKT_CTRL:
+				break;
+		case QI_TIM_CFG:
+			break;
+		case QI_TSTR_MODE_CFG:
+			break;
+		case CALIB:
+			break;
+		case SYS_DETAILS:
+			get_system_details_handler(aRxBuffer);
+		break;
+
+		case MISC:
+		
+		break;
+	}
+}
+
+void set_cmd_handler(uint8_t *aRxBuffer){
+	uint8_t lFuncType = aRxBuffer[5];
+	switch((func_type_e)lFuncType){
+	case POWER_MGMT:
+		break;
+	case QI_PKT_MSKG:
+		break;
+	case QI_PKT_CGF:
+		break;
+	case QI_PKT_CTRL:
+			break;
+	case QI_TIM_CFG:
+		break;
+	case QI_TSTR_MODE_CFG:
+		break;
+	case CALIB:
+		break;
+	case SYS_DETAILS:
+		break;
+	case MISC:
+		break;
+	default:
+		break;
+	}
+	//echoback for set commands
+    tcp_send_response(aRxBuffer, API_LENGTH_DECODE(aRxBuffer), (2 * NX_IP_PERIODIC_RATE));
+
+}
+/**
+ * @brief Process the incoming application command, 
+ * Entry point for API command processing that differentiates SET/GET/PGM commands
+ * 
+ * @param aRxBuffer 
+ */
+void process_app_cmd(uint8_t *aRxBuffer){
+
+	uint8_t lCmdType = aRxBuffer[0];
+	switch((cmd_type_e)lCmdType ){
+		case SET_CMD:
+			set_cmd_handler(aRxBuffer);
+			break;
+		case GET_CMD:
+			get_cmd_handler(aRxBuffer);
+			break;
+		case PGM_CMD:
+			break;
+	}
+}
+void grl_app_init(){
+	ipc_shm_init();
+    __HAL_RCC_HSEM_CLK_ENABLE();
+	cm4_reply_ready = 0;
+	api_rx = 0;
+
+	//	sentindex = 0;
+    printf("M7_TO_M4 @ %p\n", &SHM_M7_TO_M4);
+    printf("M4_TO_M7 @ %p\n", &SHM_M4_TO_M7);
+}
+
+/**
+ * @brief API Process Thread Entry.
+ * THis is used to process the incoming API commands from TCP/IP stack, This thread is waken up from mulitple events
+ * - API RX Event - when new API command is received from TCP/IP stack
+ * - CM4 Interrupt Event - when CM4 has sent a reply to CM7
+ * 
+ * @param thread_input 
+ * @return VOID 
+ */
+VOID ApiProcess_Thread_Entry(ULONG thread_input)
+{
+    ULONG flags;
+    uint8_t local_buf[TCP_CHUNK_SIZE];
+    uint16_t len;
+    uint32_t shm_len = 0;
+    grl_app_init();
+    grl_tim_init();
+    while (1)
+    {
+        tx_event_flags_get(&ApiEventFlags, (API_RX_EVT | CM4_INTR), TX_OR_CLEAR, &flags, NX_WAIT_FOREVER);
+
+        if (flags & API_RX_EVT)
+//    	if(api_rx)
+        {
+    		api_rx = 0;
+            if(api_dequeue(local_buf, &len) == 0)
+            {
+                process_app_cmd(local_buf);
+            }
+        }
+        if(flags & CM4_INTR)
+        {
+        	if(cm4_reply_ready)
+        	{
+        		cm4_reply_ready = 0;
+
+        		SCB_InvalidateDCache_by_Addr((uint32_t*)&SHM_M4_TO_M7,
+        		                                     cache_align_size(sizeof(SHM_M4_TO_M7)));
+        		__DMB();
+
+        		shm_len = SHM_M4_TO_M7.len;
+        		if (shm_len == 0 || shm_len > API_MAX_LEN) {
+        		    printf("SHM len bad: %lu\n", shm_len);
+        		    continue;
+        		}
+        		memcpy(ltx_buffer, (void*)SHM_M4_TO_M7.data, shm_len);
+                tcp_send_response(ltx_buffer, (USHORT)shm_len, (2 * NX_IP_PERIODIC_RATE));
+        	}
+        }
+    }
+}

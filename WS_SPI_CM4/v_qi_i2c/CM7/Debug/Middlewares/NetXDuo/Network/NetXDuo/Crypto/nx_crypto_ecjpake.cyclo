@@ -1,0 +1,14 @@
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:72:21:_nx_crypto_ecjpake_init	2
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:165:21:_nx_crypto_ecjpake_hello_generate	6
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:335:21:_nx_crypto_ecjpake_hello_process	8
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:491:21:_nx_crypto_ecjpake_key_exchange_generate	2
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:629:21:_nx_crypto_ecjpake_key_exchange_process	5
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:777:21:_nx_crypto_ecjpake_schnorr_zkp_hash	15
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:1106:21:_nx_crypto_ecjpake_schnorr_zkp_generate	2
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:1209:21:_nx_crypto_ecjpake_schnorr_zkp_verify	3
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:1315:21:_nx_crypto_ecjpake_public_key_generate	1
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:1399:21:_nx_crypto_ecjpake_pre_master_secret_generate	6
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:1535:6:_nx_crypto_ecjpake_key_encryption_key_generate	5
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:1638:22:_nx_crypto_method_ecjpake_init	9
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:1732:22:_nx_crypto_method_ecjpake_cleanup	1
+D:/gitrepo/Vi-Qi-FSK-Decode/WS_SPI_CM4/v_qi_i2c/Middlewares/ST/netxduo/crypto_libraries/src/nx_crypto_ecjpake.c:1811:21:_nx_crypto_method_ecjpake_operation	26

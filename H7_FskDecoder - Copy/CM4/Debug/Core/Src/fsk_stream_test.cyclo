@@ -1,0 +1,6 @@
+../Core/Inc/ipc_stream_shared.h:122:24:ipc_stream_ring_used_internal	2
+../Core/Inc/ipc_stream_shared.h:160:24:ipc_stream_used	1
+../Core/Inc/ipc_stream_shared.h:175:24:ipc_stream_free	1
+../Core/Inc/ipc_stream_shared.h:194:19:ipc_stream_write	10
+../Core/Src/fsk_stream_test.c:14:6:fsk_stream_test_init	1
+../Core/Src/fsk_stream_test.c:19:6:fsk_stream_test_emit	1

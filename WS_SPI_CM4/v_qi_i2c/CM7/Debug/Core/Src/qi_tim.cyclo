@@ -1,0 +1,7 @@
+../Core/Src/qi_tim.c:18:14:ms_to_ticks	3
+../Core/Src/qi_tim.c:27:6:msg_tim_init	1
+../Core/Src/qi_tim.c:40:13:msg_timer1_cb	2
+../Core/Src/qi_tim.c:51:6:msg_timer_cfg	2
+../Core/Src/qi_tim.c:73:6:msg_timer_set_period	2
+../Core/Src/qi_tim.c:84:6:msg_timer_stop	2
+../Core/Src/qi_tim.c:102:6:msg_timer_start	2

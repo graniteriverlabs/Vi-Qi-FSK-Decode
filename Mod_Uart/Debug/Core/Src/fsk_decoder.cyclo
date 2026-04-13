@@ -1,0 +1,6 @@
+../Core/Src/fsk_decoder.c:428:24:moving_average_16	4
+../Core/Src/fsk_decoder.c:456:23:delayed_abs_diff	4
+../Core/Src/fsk_decoder.c:561:16:calculate_parity	3
+../Core/Src/fsk_decoder.c:482:13:process_frame	10
+../Core/Src/fsk_decoder.c:539:24:classify_symbol	4
+../Core/Src/fsk_decoder.c:88:6:process_block	20

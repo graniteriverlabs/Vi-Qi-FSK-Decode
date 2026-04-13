@@ -1,0 +1,5 @@
+../Core/Inc/ipc_shared.h:40:24:cache_align_size	1
+../Core/Src/ipc_shared.c:40:6:ipc_shm_init	1
+../Core/Src/ipc_shared.c:69:6:HAL_HSEM_FreeCallback	2
+../Core/Src/ipc_shared.c:105:5:hsem_take_with_timeout	3
+../Core/Src/ipc_shared.c:141:6:cm7_send_to_cm4	6

@@ -1,0 +1,5 @@
+../Core/Inc/ipc_stream_shared.h:122:24:ipc_stream_ring_used_internal	2
+../Core/Inc/ipc_stream_shared.h:160:24:ipc_stream_used	1
+../Core/Inc/ipc_stream_shared.h:249:24:ipc_stream_read	5
+../Core/Src/cm7_stream_drain.c:25:6:cm7_stream_drain_init	1
+../Core/Src/cm7_stream_drain.c:33:10:cm7_stream_drain_fill_packet	4

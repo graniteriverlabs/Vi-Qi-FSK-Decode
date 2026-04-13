@@ -1,0 +1,42 @@
+/*
+ * fsk_config.h
+ *
+ *  Created on: Feb 24, 2026
+ *      Author: kanna
+ */
+
+#ifndef INC_FSK_CONFIG_H_
+#define INC_FSK_CONFIG_H_
+
+#define OFFLINE_CAPTURE_MODE   0   // 1 = 64k snapshot mode		0 = continuous circular mode
+#define FSK_STREAM_TEST_MODE  0   // 1 = emit synthetic test stream instead of real capture data
+#define FSK_EXT_TRIGGER_DEBUG   0
+
+#if OFFLINE_CAPTURE_MODE
+
+//#define CAPTURE_SAMPLES  16384   // 64 KB snapshot
+#define CAPTURE_SAMPLES  5120   // 20 KB snapshot
+
+#else
+
+//#define CAPTURE_SAMPLES  2048    // circular buffer size
+#define CAPTURE_SAMPLES  512    // circular buffer size
+
+#endif
+
+
+#define HRTIM_TIMER_MAX    		65535u   // must match PERxR
+#define DELTA_MIN		   		5		// 30ns/5.8823ns = 5 cycles
+#define DELTA_MAX		   		61		// 360ns/5.8823ns = 61 cycles
+
+
+#define BIT1_TARGET      		64
+#define BIT0_TARGET      		128
+#define IDLE_TARGET      		1024
+
+#define TOL_PERCENT      		20
+
+#define WITHIN(val, target) \
+    (((val) > ((target) - ((target) * TOL_PERCENT / 100))) && \
+     ((val) < ((target) + ((target) * TOL_PERCENT / 100))))
+#endif /* INC_FSK_CONFIG_H_ */

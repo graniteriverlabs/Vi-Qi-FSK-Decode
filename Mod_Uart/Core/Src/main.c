@@ -22,6 +22,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "string.h"
+#include "stdio.h"
+#include <fsk_config.h>
+#include <fsk_decoder.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,6 +35,8 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define RES	5.88235			// At 170MHz, 1/170M = 5.88235us
+
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -48,53 +53,10 @@ TIM_HandleTypeDef htim3;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-#define HRTIM_TIMER_MAX    65535u   // must match PERxR
-#define DELTA_MIN		   5		// 30ns/5.8823ns = 5 cycles
-#define DELTA_MAX		   61		// 360ns/5.8823ns = 61 cycles
 
+volatile uint8_t debugFlag =0;
+volatile uint8_t printdata =0;
 
-#if OFFLINE_CAPTURE_MODE
-#define PERIOD_BUF_SIZE		16384
-uint16_t period_buf[PERIOD_BUF_SIZE];
-volatile uint32_t period_wr_idx = 0;
-
-volatile uint8_t capture_done = 0;
-
-
-__attribute__((aligned(4)))
-volatile uint32_t hrtim_capture_buf[CAPTURE_SAMPLES];
-
-
-typedef struct
-{
-    uint32_t period;
-    uint32_t ma;
-    uint16_t delta;
-    uint8_t  toggled;
-} debug_sample_t;
-debug_sample_t debug_buf[CAPTURE_SAMPLES];
-volatile uint32_t debug_index =0;
-volatile uint8_t toggle =0;
-
-#else
-
-__attribute__((aligned(4)))
-volatile uint32_t hrtim_capture_buf[CAPTURE_SAMPLES];
-
-#endif
-
-#define MA_WINDOW 16
-
-static uint32_t ma_buffer[MA_WINDOW];
-static uint64_t ma_sum = 0;      // use 64-bit to avoid overflow
-static uint8_t  ma_index = 0;
-static uint8_t  ma_filled = 0;
-
-#define DELAY 24
-
-static uint32_t ma_delay_buffer[DELAY];
-static uint8_t  delay_index = 0;
-static uint8_t  delay_filled = 0;
 
 
 volatile uint32_t max_cycles = 0;
@@ -114,9 +76,8 @@ static void MX_USART1_UART_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-static int8_t active = 0;		// 0 = waiting for first edge
-static int8_t last_sign = 0;   // +1 or -1
-static uint32_t period_counter = 0;
+
+
 /* USER CODE END 0 */
 
 /**
@@ -128,7 +89,6 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 	char msg[64];
-	uint32_t last_print = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -186,7 +146,7 @@ int main(void)
 	generate_fsk_test();
     static uint32_t last_print = 0;
 
-//#ifdef DWT_DEBUG
+#ifdef DWT_DEBUG
     if (HAL_GetTick() - last_print > 1000)  // every 1 second
     {
         last_print = HAL_GetTick();
@@ -204,10 +164,22 @@ int main(void)
                           len,
                           HAL_MAX_DELAY);
     }
-//#endif
+#endif
+#if 0
+    if(debugFlag)
+	{
+        int len = snprintf(msg, sizeof(msg),
+                           "Res  %u\r\n",
+						   printdata);
+
+        HAL_UART_Transmit(&huart1,
+                          (uint8_t*)msg,
+                          len,
+                          HAL_MAX_DELAY);
+	}
 	//Continuous mode: nothing required here
 	// Processing is done in DMA IRQ
-
+#endif
 #endif
     /* USER CODE END WHILE */
 
@@ -568,371 +540,6 @@ void start_capture(void)
 #endif
 }
 
-static uint32_t prev_timestamp = 0;
-
-#if !OFFLINE_CAPTURE_MODE
-
-
-
-void process_block(uint32_t start, uint32_t length)
-{
-    for (uint32_t i = 0; i < length; i++)
-    {
-        uint32_t curr = hrtim_capture_buf[start + i];
-        uint32_t period;
-
-        if (curr >= prev_timestamp)
-            period = curr - prev_timestamp;
-        else
-            period = (HRTIM_TIMER_MAX - prev_timestamp) + curr + 1;
-
-        period = (period) / 32;	//(period * RES) / 32, TO avoid floating point multiplication, removed *RES. So 1unit = 5.8823ns ,
-        						// All calculations are done based on SYSCLK cycles, instead of time or HRTIM cycles
-        prev_timestamp = curr;
-
-        uint32_t ma = moving_average_16(period);
-        int32_t diff = delayed_abs_diff(ma);
-        int32_t abs_diff = (diff >=0) ? diff : -diff;
-
-
-
-        int8_t sign = 0;
-
-        if (diff > 0)	sign = 1;
-        else if (diff < 0)	sign = -1;
-
-        /* Valid transition condition */
-        if (abs_diff > DELTA_MIN && abs_diff < DELTA_MAX)
-        {
-            if (!active)
-            {
-                // First transition detected
-                active = 1;
-                last_sign = sign;
-                period_counter = 0;
-
-                HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
-            }
-            else
-            {
-                // Already counting — check if opposite sign
-                if (sign == -last_sign)
-                {
-                    // Opposite edge detected
-
-//                    record_period(period_counter);
-
-                    // Restart counting for next segment
-                    period_counter = 0;
-                    last_sign = sign;
-
-                    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
-                }
-            }
-        }
-
-        /* If active, keep counting */
-        if (active)
-        {
-            period_counter++;
-        }
-
-
-        // Example classification
-//        if (filtered < 20000)
-//        {
-//            // bit = 1
-//        }
-//        else
-//        {
-//            // bit = 0
-//        }
-    }
-}
-#else
-
-void process_block(uint32_t start, uint32_t length)
-{
-    for (uint32_t i = 0; i < length; i++)
-    {
-        if (debug_index >= length)
-            return;
-
-        uint32_t curr = hrtim_capture_buf[start + i];
-        uint32_t period;
-
-        if (curr >= prev_timestamp)
-            period = curr - prev_timestamp;
-        else
-            period = (HRTIM_TIMER_MAX - prev_timestamp) + curr + 1;
-
-        period = period / 32;
-        prev_timestamp = curr;
-
-        uint32_t ma = moving_average_16(period);
-        int32_t diff = delayed_abs_diff(ma);
-        int32_t abs_diff = (diff >=0) ? diff : -diff;
-
-
-
-        int8_t sign = 0;
-
-        if (diff > 0)	sign = 1;
-        else if (diff < 0)	sign = -1;
-
-        /* Valid transition condition */
-        if (abs_diff > DELTA_MIN && abs_diff < DELTA_MAX)
-        {
-            if (!active)
-            {
-                // First transition detected
-                active = 1;
-                last_sign = sign;
-                period_counter = 0;
-                toggle = !toggle;
-            }
-            else
-            {
-                // Already counting — check if opposite sign
-                if (sign == -last_sign)
-                {
-                    // Opposite edge detected
-
-//                    record_period(period_counter);
-
-                    // Restart counting for next segment
-                    period_counter = 0;
-                    last_sign = sign;
-                    toggle = !toggle;
-                }
-            }
-        }
-
-        /* If active, keep counting */
-        if (active)
-        {
-            period_counter++;
-        }
-
-//        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
-
-        debug_buf[debug_index].period  = period;
-        debug_buf[debug_index].ma      = ma;
-        debug_buf[debug_index].delta   = abs_diff;
-        debug_buf[debug_index].toggled = toggle;
-
-        debug_index++;
-    }
-}
-#if 0
-void process_fsk_capture(void)
-{
-    static uint32_t prev = 0;
-    static uint8_t  first = 1;
-
-    static uint32_t read_idx = 0;
-
-    uint32_t curr, period;
-
-	curr = hrtim_capture_buf[read_idx];
-
-	read_idx++;
-	if (read_idx >= CAPTURE_SAMPLES)
-		read_idx = 0;
-
-	if (first)
-	{
-		prev = curr;
-		first = 0;
-		return;
-	}
-
-	if (curr >= prev)
-		period = curr - prev;
-	else
-		period = (HRTIM_TIMER_MAX - prev) + curr + 1;
-
-	prev = curr;
-
-	/* ---- SAVE PERIOD INTO BUFFER ---- */
-	period_buf[period_wr_idx++] = period;
-	if (period_wr_idx >= PERIOD_BUF_SIZE)
-		period_wr_idx = 0;
-
-	/* Example: classify frequency */
-	if (period < 750)        // ~210 kHz
-	{
-		// bit = 1
-	}
-	else if (period > 850)   // ~105 kHz
-	{
-		// bit = 0
-	}
-}
-
-void post_processing(void)
-{
-    uint32_t prev = hrtim_capture_buf[0];
-
-    for (uint32_t i = 1; i < CAPTURE_SAMPLES; i++)
-    {
-        uint32_t curr = hrtim_capture_buf[i];
-        uint32_t period;
-
-        if (curr >= prev)
-            period = curr - prev;
-        else
-            period = (HRTIM_TIMER_MAX - prev) + curr + 1;
-
-        prev = curr;
-
-        /* Save period */
-        period_buf[i - 1] = period;
-
-        /* Example classification */
-        if (period < 750)
-        {
-            // bit = 1
-        }
-        else if (period > 850)
-        {
-            // bit = 0
-        }
-    }
-}
-#endif
-
-void uart_dump_capture(void)
-{
-    char line[64];
-
-    /* Start marker */
-    const char *start = "START\r\n";
-    HAL_UART_Transmit(&huart1,
-                      (uint8_t *)start,
-                      strlen(start),
-                      HAL_MAX_DELAY);
-
-    for (uint32_t i = 0; i < CAPTURE_SAMPLES; i++)
-    {
-        int len = snprintf(line, sizeof(line),
-                           "%lu\t%lu\t%lu\t%u\r\n",
-                           (unsigned long)debug_buf[i].period,
-                           (unsigned long)debug_buf[i].ma,
-                           (unsigned long)debug_buf[i].delta,
-                           debug_buf[i].toggled);
-
-        HAL_UART_Transmit(&huart1,
-                          (uint8_t *)line,
-                          len,
-                          HAL_MAX_DELAY);
-    }
-
-    /* End marker */
-    const char *end = "END\r\n";
-    HAL_UART_Transmit(&huart1,
-                      (uint8_t *)end,
-                      strlen(end),
-                      HAL_MAX_DELAY);
-}
-
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-#if OFFLINE_CAPTURE_MODE
-	if(GPIO_Pin == GPIO_PIN_2)
-	{
-		start_capture();
-	}
-#endif
-}
-
-#endif
-
-static inline uint32_t moving_average_16(uint32_t new_value)
-{
-    if (ma_filled < MA_WINDOW)
-    {
-        ma_buffer[ma_index++] = new_value;
-        ma_sum += new_value;
-        ma_filled++;
-
-        if (ma_index >= MA_WINDOW)
-            ma_index = 0;
-
-        return ma_sum / ma_filled;   // ramp-up phase
-    }
-
-    /* subtract oldest */
-    ma_sum -= ma_buffer[ma_index];
-
-    /* insert newest */
-    ma_buffer[ma_index] = new_value;
-    ma_sum += new_value;
-
-    ma_index++;
-    if (ma_index >= MA_WINDOW)
-        ma_index = 0;
-
-    return (uint32_t)(ma_sum >> 4);   // divide by 16
-}
-
-static inline int32_t delayed_abs_diff(uint32_t new_ma)
-{
-    int32_t old_ma = 0;
-//    uint32_t diff = 0;
-
-    if (delay_filled < DELAY)
-    {
-        ma_delay_buffer[delay_index++] = new_ma;
-        delay_filled++;
-
-        if (delay_index >= DELAY)
-            delay_index = 0;
-
-        return 0;   // not enough data yet
-    }
-
-    old_ma = ma_delay_buffer[delay_index];
-
-    ma_delay_buffer[delay_index] = new_ma;
-
-    delay_index++;
-    if (delay_index >= DELAY)
-        delay_index = 0;
-
-#if 0
-    if (new_ma > old_ma)
-        diff = new_ma - old_ma;
-    else
-        diff = old_ma - new_ma;
-
-    return diff;
-#endif
-
-    return (new_ma - old_ma);	//signed difference
-}
-
-
-void generate_fsk_test(void)
-{
-    static uint8_t bit = 0;
-
-    if (bit)
-    {
-        __HAL_TIM_SET_AUTORELOAD(&htim3, 894);   // 190 kHz
-        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 447);
-    }
-    else
-    {
-//        __HAL_TIM_SET_AUTORELOAD(&htim3, 1415);  // 120 kHz
-//        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 708);
-        __HAL_TIM_SET_AUTORELOAD(&htim3, 339);  // 120 kHz
-        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 170);
-    }
-
-//    bit ^= 1;
-}
-
 void DWT_Init(void)
 {
     /* Enable TRC (Trace) */
@@ -950,9 +557,9 @@ void HAL_DMA_XferHalfCpltCallback(DMA_HandleTypeDef *hdma)
 	uint32_t start = DWT->CYCCNT;
     if (hdma == &hdma_hrtim1_a)
     {
-    	HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_SET);
+//    	HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_SET);
         process_block(0, CAPTURE_SAMPLES / 2);
-        HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_RESET);
+//        HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_RESET);
     }
     uint32_t end = DWT->CYCCNT;
 
@@ -991,6 +598,27 @@ void HAL_DMA_XferCpltCallback(DMA_HandleTypeDef *hdma)
     	max_cycles = cycles;
 #endif
 }
+
+void generate_fsk_test(void)
+{
+	static uint8_t bit = 0;
+
+	if (bit)
+	{
+		__HAL_TIM_SET_AUTORELOAD(&htim3, 894);   // 190 kHz
+		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 447);
+	}
+	else
+	{
+//        __HAL_TIM_SET_AUTORELOAD(&htim3, 1415);  // 120 kHz
+//        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 708);
+		__HAL_TIM_SET_AUTORELOAD(&htim3, 339);  // 120 kHz
+		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 170);
+	}
+
+//    bit ^= 1;
+}
+
 /* USER CODE END 4 */
 
 /**

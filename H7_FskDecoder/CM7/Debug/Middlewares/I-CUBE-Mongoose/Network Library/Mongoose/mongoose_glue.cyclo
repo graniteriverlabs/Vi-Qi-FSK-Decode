@@ -1,0 +1,6 @@
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/CM7/I-CUBE-Mongoose/App/mongoose_glue.c:11:6:glue_get_leds	1
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/CM7/I-CUBE-Mongoose/App/mongoose_glue.c:14:6:glue_set_leds	1
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/CM7/I-CUBE-Mongoose/App/mongoose_glue.c:18:13:ota_end_timer_cb	1
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/CM7/I-CUBE-Mongoose/App/mongoose_glue.c:22:7:glue_ota_begin_firmware_update	3
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/CM7/I-CUBE-Mongoose/App/mongoose_glue.c:28:6:glue_ota_end_firmware_update	2
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/CM7/I-CUBE-Mongoose/App/mongoose_glue.c:35:6:glue_ota_write_firmware_update	2

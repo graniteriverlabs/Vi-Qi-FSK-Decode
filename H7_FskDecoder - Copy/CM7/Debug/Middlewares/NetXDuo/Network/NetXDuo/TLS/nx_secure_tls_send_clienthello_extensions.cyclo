@@ -1,0 +1,10 @@
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_clienthello_extensions.c:147:6:_nx_secure_tls_send_clienthello_extensions	15
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_clienthello_extensions.c:334:13:_nx_secure_tls_send_clienthello_sig_extension	4
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_clienthello_extensions.c:416:6:_nx_secure_tls_get_signature_algorithm	19
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_clienthello_extensions.c:560:13:_nx_secure_tls_send_clienthello_supported_versions_extension	4
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_clienthello_extensions.c:696:13:_nx_secure_tls_send_clienthello_key_share_extension	4
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_clienthello_extensions.c:903:6:_nx_secure_tls_send_clienthello_psk_extension	12
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_clienthello_extensions.c:1254:13:_nx_secure_tls_send_clienthello_psk_kem_extension	1
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_clienthello_extensions.c:1362:13:_nx_secure_tls_send_clienthello_sni_extension	3
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_clienthello_extensions.c:1516:13:_nx_secure_tls_send_clienthello_sec_reneg_extension	5
+D:/gitrepo/Vi-Qi-FSK-Decode/H7_FskDecoder/Middlewares/ST/netxduo/nx_secure/src/nx_secure_tls_send_clienthello_extensions.c:1689:13:_nx_secure_tls_send_clienthello_sec_spf_extensions	4

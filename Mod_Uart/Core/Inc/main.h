@@ -31,7 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#define OFFLINE_CAPTURE_MODE   0   // 1 = 64k snapshot mode		0 = continuous circular mode
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -55,16 +55,12 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+
 void start_capture(void);
-void process_block(uint32_t start, uint32_t length);
-void post_processing(void);
-void uart_dump_capture(void);
-static inline uint32_t moving_average_16(uint32_t new_value);
-static inline int32_t delayed_abs_diff(uint32_t new_ma);
-void generate_fsk_test(void);
 void DWT_Init(void);
 void HAL_DMA_XferHalfCpltCallback(DMA_HandleTypeDef *hdma);
 void HAL_DMA_XferCpltCallback(DMA_HandleTypeDef *hdma);
+void generate_fsk_test(void);
 
 /* USER CODE END EFP */
 
@@ -73,16 +69,6 @@ void HAL_DMA_XferCpltCallback(DMA_HandleTypeDef *hdma);
 #define DebugIO0_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
-#if OFFLINE_CAPTURE_MODE
-
-//#define CAPTURE_SAMPLES  16384   // 64 KB snapshot
-#define CAPTURE_SAMPLES  5120   // 20 KB snapshot
-
-#else
-
-#define CAPTURE_SAMPLES  2048    // circular buffer size
-
-#endif
 
 /* USER CODE END Private defines */
 

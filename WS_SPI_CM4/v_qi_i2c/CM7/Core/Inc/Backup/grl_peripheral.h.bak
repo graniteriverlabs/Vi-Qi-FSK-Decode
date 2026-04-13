@@ -1,0 +1,28 @@
+/*
+ * grl_peripheral.h
+ *
+ *  Created on: Jan 23, 2026
+ *      Author: GRL
+ */
+
+#ifndef INC_GRL_PERIPHERAL_H_
+#define INC_GRL_PERIPHERAL_H_
+//#include "grl_enum.h"
+#include "grl_defs.h"
+
+/* -------- Types -------- */
+typedef struct {
+
+	uint32_t rv_ri_ts_ms;
+	uint16_t rv;
+	uint16_t ri;
+
+	uint32_t uart_ts_ms;
+	uint16_t len;
+	uint8_t  data[PKT_MAX_PAYLOAD];
+} uart4_pkt_t;
+
+int UART4_PktRing_Pop(uart4_pkt_t *out,uint8_t *read_idx, uint8_t *wr_idx);
+void UART4_StartRxToIdle(void);
+//void UART4_PoC_RxTxBridge_Poll(void);
+#endif /* INC_GRL_PERIPHERAL_H_ */

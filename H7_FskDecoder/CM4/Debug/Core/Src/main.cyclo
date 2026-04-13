@@ -1,0 +1,10 @@
+../Core/Inc/ipc_stream_shared.h:140:20:ipc_stream_init	2
+../Core/Src/main.c:365:6:HAL_DMA_XferHalfCpltCallback	4
+../Core/Src/main.c:393:6:HAL_DMA_XferCpltCallback	2
+../Core/Src/main.c:89:6:SPI_PrepareData	1
+../Core/Src/main.c:114:6:HAL_SPI_TxRxCpltCallback	2
+../Core/Src/main.c:127:6:HAL_SPI_ErrorCallback	2
+../Core/Src/main.c:318:6:start_capture	18
+../Core/Src/main.c:434:6:DWT_Init	1
+../Core/Src/main.c:143:5:main	5
+../Core/Src/main.c:451:6:Error_Handler	1
