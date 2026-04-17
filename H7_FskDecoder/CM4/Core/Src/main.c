@@ -30,6 +30,7 @@
 #include "cm4_grl_app.h"
 #include <fsk_decoder.h>
 #include <fsk_config.h>
+#include <fsk_debug.h>
 #include <fsk_online_stream.h>
 #include <ipc_stream_shared.h>
 /* USER CODE END Includes */
@@ -207,10 +208,9 @@ int main(void)
    */
   ipc_stream_init();
 
-  /**
-   * @brief Initialize CM4-side online streaming policy.
-   */
-  fsk_online_stream_init();
+#if (!OFFLINE_CAPTURE_MODE) && (FSK_DEBUG_LIVE_PERIOD_FAST_STREAM || FSK_DEBUG_LIVE_PERIOD_BLOCK_STREAM)
+    fsk_online_stream_init();
+#endif
 
   DWT_Init();
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
@@ -297,17 +297,56 @@ int main(void)
     if (dma_half_ready)
     {
         dma_half_ready = 0;
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
-        process_block(0, CAPTURE_SAMPLES / 2);
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET);
+#if FSK_DEBUG_PROCESS_TIMING_GPIO
+//        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
+#endif
+
+#if FSK_DEBUG_LIVE_PERIOD_FAST_STREAM
+        /**
+         * Fast period-only stream path.
+         *
+         * This avoids process_block(), so it avoids:
+         * - moving_average_16()
+         * - delayed_diff()
+         * - transition detection
+         * - decoder state machine
+         */
+        fsk_online_period_fast_block_process(0U, FSK_DMA_HALF_SAMPLES);
+#else
+        /**
+         * Normal decode path.
+         */
+        process_block(0U, FSK_DMA_HALF_SAMPLES);
+#endif
+
+#if FSK_DEBUG_PROCESS_TIMING_GPIO
+//        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET);
+#endif
     }
 
     if (dma_full_ready)
     {
         dma_full_ready = 0;
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
-        process_block(CAPTURE_SAMPLES / 2, CAPTURE_SAMPLES / 2);
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET);
+#if FSK_DEBUG_PROCESS_TIMING_GPIO
+//        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
+#endif
+
+#if FSK_DEBUG_LIVE_PERIOD_FAST_STREAM
+        /**
+         * Fast period-only stream path for the second DMA half.
+         */
+        fsk_online_period_fast_block_process(FSK_DMA_HALF_SAMPLES,
+                                             FSK_DMA_HALF_SAMPLES);
+#else
+        /**
+         * Normal decode path.
+         */
+        process_block(FSK_DMA_HALF_SAMPLES, FSK_DMA_HALF_SAMPLES);
+#endif
+
+#if FSK_DEBUG_PROCESS_TIMING_GPIO
+//        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET);
+#endif
     }
 #endif
   }
@@ -325,6 +364,13 @@ void start_capture(void)
     capture_active = 1;
     capture_done   = 0;
     fsk_decoder_reset_state();
+
+#if (!OFFLINE_CAPTURE_MODE) && (FSK_DEBUG_LIVE_PERIOD_FAST_STREAM || FSK_DEBUG_LIVE_PERIOD_BLOCK_STREAM)
+    /**
+     * Reset online stream counters and previous timestamp for each new capture.
+     */
+    fsk_online_stream_init();
+#endif
 
     HRTIM1->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_A].CNTxR = 0;
 
@@ -373,13 +419,6 @@ void HAL_DMA_XferHalfCpltCallback(DMA_HandleTypeDef *hdma)
             dma_half_overrun++;
         }
         dma_half_ready = 1;
-#if 0
-//    	HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_SET);
-    	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
-        process_block(0, CAPTURE_SAMPLES / 2);
-//        HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET);
-#endif
     }
     uint32_t end = DWT->CYCCNT;
 
@@ -414,13 +453,6 @@ void HAL_DMA_XferCpltCallback(DMA_HandleTypeDef *hdma)
         }
         dma_full_ready = 1;
 
-#if 0
-//    	HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_SET);
-    	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
-        process_block(CAPTURE_SAMPLES / 2, CAPTURE_SAMPLES / 2);
-//        HAL_GPIO_WritePin(DebugIO0_GPIO_Port, DebugIO0_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET);
-#endif
     }
     uint32_t end = DWT->CYCCNT;
 

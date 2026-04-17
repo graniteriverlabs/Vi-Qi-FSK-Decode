@@ -48,7 +48,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+#define FSK_DEBUG_OFFLINE_PERIOD_ONLY	1
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -111,29 +111,49 @@
 #define FSK_UDP_MAX_PAYLOAD_SIZE         (1400U)
 
 /**
- * @brief Maximum number of FSK records packed into one UDP packet.
+ * @brief Size of the fixed UDP stream header.
  *
- * Record size = 8 bytes
- * Header size = 16 bytes
+ * Current header fields:
+ * magic        : 4 bytes
+ * version      : 2 bytes
+ * header_size  : 2 bytes
+ * sequence     : 4 bytes
+ * record_count : 2 bytes
+ * record_size  : 2 bytes
  *
- * 170 records -> 170 * 8 = 1360 bytes
- * Total UDP payload = 1360 + 16 = 1376 bytes
+ * Total = 16 bytes.
  */
-#define FSK_UDP_MAX_RECORDS_PER_PACKET   (170U)
+#define FSK_UDP_HEADER_SIZE_BYTES        (16U)
 
 /**
- * @brief Size of one online FSK stream record in bytes.
+ * @brief FSK UDP record size selected from the debug format.
+ *
+ * Period-only offline mode sends uint16_t records.
+ * Full-record mode sends ipc_stream_record_t records.
  */
+#if FSK_DEBUG_OFFLINE_PERIOD_ONLY
+#define FSK_UDP_RECORD_SIZE              (sizeof(uint16_t))
+#else
 #define FSK_UDP_RECORD_SIZE              (sizeof(ipc_stream_record_t))
+#endif
 
 
 /**
- * @brief Maximum number of body bytes carried after the UDP packet header.
+ * @brief Maximum body bytes that fit in one MTU-safe UDP payload.
  *
- * 170 records * 8 bytes = 1360 bytes.
+ * The body is rounded down to a whole number of records so CM7 never sends
+ * partial records to the PC.
  */
-#define FSK_UDP_TARGET_BODY_BYTES           (FSK_UDP_MAX_RECORDS_PER_PACKET * FSK_UDP_RECORD_SIZE)
+#define FSK_UDP_MAX_BODY_BYTES_RAW       (FSK_UDP_MAX_PAYLOAD_SIZE - FSK_UDP_HEADER_SIZE_BYTES)
 
+#define FSK_UDP_TARGET_BODY_BYTES        \
+    ((FSK_UDP_MAX_BODY_BYTES_RAW / FSK_UDP_RECORD_SIZE) * FSK_UDP_RECORD_SIZE)
+
+/**
+ * @brief Maximum records per UDP packet for the selected record format.
+ */
+#define FSK_UDP_MAX_RECORDS_PER_PACKET   \
+    (FSK_UDP_TARGET_BODY_BYTES / FSK_UDP_RECORD_SIZE)
 /**
  * @brief Maximum time to wait before flushing a partially filled UDP packet.
  *

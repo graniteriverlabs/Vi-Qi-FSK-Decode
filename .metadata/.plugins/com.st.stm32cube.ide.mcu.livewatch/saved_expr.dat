@@ -35,3 +35,5 @@ g_eth_driver_last_dmacsr
 g_eth_driver_last_macrxtxsr
 g_eth_driver_last_mtltxqdr
 g_eth_driver_hw_abnormal_count
+dma_half_overrun
+dma_full_overrun
