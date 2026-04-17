@@ -14001,3 +14001,30 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2026-04-17 16:11:18.680
 !MESSAGE Existing sessions are:
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-17 17:11:39.956
+!MESSAGE [Info]	[AutoModelService] Auto model cache cleared due to token update
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-17 17:26:05.059
+!MESSAGE [Info]	[fetchCompletions] Request 7b90e5bd-e6bd-4c1c-9342-ee1d18458f3b at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 715.0936000049114ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-17 17:26:05.131
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-17 17:26:05.495
+!MESSAGE [Info]	[fetchCompletions] Request 486d2ceb-b9dd-4b6a-bd52-419958330dac at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 314.66990000009537ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-17 17:26:05.514
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-17 17:26:17.572
+!MESSAGE [Info]	[fetchCompletions] Request d3a20291-4f1e-405f-9ad3-df7be6c8c9a2 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 333.6137999892235ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-17 17:26:17.645
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-17 17:26:17.938
+!MESSAGE [Info]	[fetchCompletions] Request 9f4fdbe0-b5e3-4fa6-98ea-483ab7372234 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 250.46699999272823ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-17 17:26:17.938
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]

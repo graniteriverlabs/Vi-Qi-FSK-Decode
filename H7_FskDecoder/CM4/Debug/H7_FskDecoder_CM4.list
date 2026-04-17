@@ -1255,14 +1255,14 @@ static uint8_t calculate_parity(uint8_t byte)
  80a0976:	4b2b      	ldr	r3, [pc, #172]	@ (80a0a24 <process_block+0xf0>)
  80a0978:	781b      	ldrb	r3, [r3, #0]
  80a097a:	2b01      	cmp	r3, #1
- 80a097c:	d042      	beq.n	80a0a04 <process_block+0xd0>
+ 80a097c:	d041      	beq.n	80a0a02 <process_block+0xce>
     return IDLE_TARGET_512;
  80a097e:	f44f 6280 	mov.w	r2, #1024	@ 0x400
         	if (period_counter < idle_target)
  80a0982:	4b26      	ldr	r3, [pc, #152]	@ (80a0a1c <process_block+0xe8>)
  80a0984:	881b      	ldrh	r3, [r3, #0]
  80a0986:	4293      	cmp	r3, r2
- 80a0988:	d23f      	bcs.n	80a0a0a <process_block+0xd6>
+ 80a0988:	d23e      	bcs.n	80a0a08 <process_block+0xd4>
         		period_counter++;
  80a098a:	3301      	adds	r3, #1
  80a098c:	4a23      	ldr	r2, [pc, #140]	@ (80a0a1c <process_block+0xe8>)
@@ -1270,7 +1270,7 @@ static uint8_t calculate_parity(uint8_t byte)
     for (uint32_t i = 0; i < length; i++)
  80a0990:	3401      	adds	r4, #1
  80a0992:	42ac      	cmp	r4, r5
- 80a0994:	d23c      	bcs.n	80a0a10 <process_block+0xdc>
+ 80a0994:	d23b      	bcs.n	80a0a0e <process_block+0xda>
         uint32_t curr = hrtim_capture_buf[start + i];
  80a0996:	19a3      	adds	r3, r4, r6
  80a0998:	4a23      	ldr	r2, [pc, #140]	@ (80a0a28 <process_block+0xf4>)
@@ -1297,44 +1297,45 @@ static uint8_t calculate_parity(uint8_t byte)
  80a09be:	ddc3      	ble.n	80a0948 <process_block+0x14>
  80a09c0:	2701      	movs	r7, #1
         if ((abs_diff > DELTA_MIN) && (abs_diff < DELTA_MAX))
- 80a09c2:	3b1f      	subs	r3, #31
- 80a09c4:	f5b3 7f86 	cmp.w	r3, #268	@ 0x10c
- 80a09c8:	d8d1      	bhi.n	80a096e <process_block+0x3a>
+ 80a09c2:	3b0d      	subs	r3, #13
+ 80a09c4:	2b6a      	cmp	r3, #106	@ 0x6a
+ 80a09c6:	d8d2      	bhi.n	80a096e <process_block+0x3a>
             if (!active)
- 80a09ca:	4b12      	ldr	r3, [pc, #72]	@ (80a0a14 <process_block+0xe0>)
- 80a09cc:	f993 3000 	ldrsb.w	r3, [r3]
- 80a09d0:	2b00      	cmp	r3, #0
- 80a09d2:	d0bf      	beq.n	80a0954 <process_block+0x20>
+ 80a09c8:	4b12      	ldr	r3, [pc, #72]	@ (80a0a14 <process_block+0xe0>)
+ 80a09ca:	f993 3000 	ldrsb.w	r3, [r3]
+ 80a09ce:	2b00      	cmp	r3, #0
+ 80a09d0:	d0c0      	beq.n	80a0954 <process_block+0x20>
                 if (sign == -last_sign)
- 80a09d4:	4b10      	ldr	r3, [pc, #64]	@ (80a0a18 <process_block+0xe4>)
- 80a09d6:	f993 3000 	ldrsb.w	r3, [r3]
- 80a09da:	42df      	cmn	r7, r3
- 80a09dc:	d1c7      	bne.n	80a096e <process_block+0x3a>
+ 80a09d2:	4b11      	ldr	r3, [pc, #68]	@ (80a0a18 <process_block+0xe4>)
+ 80a09d4:	f993 3000 	ldrsb.w	r3, [r3]
+ 80a09d8:	42df      	cmn	r7, r3
+ 80a09da:	d1c8      	bne.n	80a096e <process_block+0x3a>
                 	symbol_t symbol = classify_symbol(period_counter);
- 80a09de:	f8df 803c 	ldr.w	r8, [pc, #60]	@ 80a0a1c <process_block+0xe8>
- 80a09e2:	f8b8 0000 	ldrh.w	r0, [r8]
- 80a09e6:	f7ff fd4d 	bl	80a0484 <classify_symbol>
+ 80a09dc:	f8df 803c 	ldr.w	r8, [pc, #60]	@ 80a0a1c <process_block+0xe8>
+ 80a09e0:	f8b8 0000 	ldrh.w	r0, [r8]
+ 80a09e4:	f7ff fd4e 	bl	80a0484 <classify_symbol>
 					period_counter = 0;
- 80a09ea:	2300      	movs	r3, #0
- 80a09ec:	f8a8 3000 	strh.w	r3, [r8]
+ 80a09e8:	2300      	movs	r3, #0
+ 80a09ea:	f8a8 3000 	strh.w	r3, [r8]
 					last_sign = sign;
- 80a09f0:	4b09      	ldr	r3, [pc, #36]	@ (80a0a18 <process_block+0xe4>)
- 80a09f2:	701f      	strb	r7, [r3, #0]
+ 80a09ee:	4b0a      	ldr	r3, [pc, #40]	@ (80a0a18 <process_block+0xe4>)
+ 80a09f0:	701f      	strb	r7, [r3, #0]
 					fsk_decoder_handle_symbol(symbol);
- 80a09f4:	f7ff ff58 	bl	80a08a8 <fsk_decoder_handle_symbol>
+ 80a09f2:	f7ff ff59 	bl	80a08a8 <fsk_decoder_handle_symbol>
 					HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);
- 80a09f8:	f44f 4180 	mov.w	r1, #16384	@ 0x4000
- 80a09fc:	4808      	ldr	r0, [pc, #32]	@ (80a0a20 <process_block+0xec>)
- 80a09fe:	f002 fcdf 	bl	80a33c0 <HAL_GPIO_TogglePin>
- 80a0a02:	e7b4      	b.n	80a096e <process_block+0x3a>
+ 80a09f6:	f44f 4180 	mov.w	r1, #16384	@ 0x4000
+ 80a09fa:	4809      	ldr	r0, [pc, #36]	@ (80a0a20 <process_block+0xec>)
+ 80a09fc:	f002 fce0 	bl	80a33c0 <HAL_GPIO_TogglePin>
+ 80a0a00:	e7b5      	b.n	80a096e <process_block+0x3a>
         return IDLE_TARGET_128;
- 80a0a04:	f44f 7200 	mov.w	r2, #512	@ 0x200
- 80a0a08:	e7bb      	b.n	80a0982 <process_block+0x4e>
+ 80a0a02:	f44f 7200 	mov.w	r2, #512	@ 0x200
+ 80a0a06:	e7bc      	b.n	80a0982 <process_block+0x4e>
         	    fsk_decoder_handle_idle_end();
- 80a0a0a:	f7ff ff35 	bl	80a0878 <fsk_decoder_handle_idle_end>
- 80a0a0e:	e7bf      	b.n	80a0990 <process_block+0x5c>
+ 80a0a08:	f7ff ff36 	bl	80a0878 <fsk_decoder_handle_idle_end>
+ 80a0a0c:	e7c0      	b.n	80a0990 <process_block+0x5c>
 }
- 80a0a10:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+ 80a0a0e:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+ 80a0a12:	bf00      	nop
  80a0a14:	38000147 	.word	0x38000147
  80a0a18:	38000146 	.word	0x38000146
  80a0a1c:	38000144 	.word	0x38000144

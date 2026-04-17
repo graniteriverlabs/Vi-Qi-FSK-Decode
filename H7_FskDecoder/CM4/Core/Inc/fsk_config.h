@@ -101,8 +101,8 @@ Total               = 12 bytes/sample
 
 
 #define HRTIM_TIMER_MAX    			65535u   // must match PERxR
-#define DELTA_MIN		   			30		// 30ns/5.8823ns = 5 cycles
-#define DELTA_MAX		   			300		// 360ns/5.8823ns = 61 cycles
+#define DELTA_MIN		   			12		// 30ns/2.5ns = 12
+#define DELTA_MAX		   			120		// 360ns/2.5ns = 120
 
 #define BIT1_TARGET_512      		256U
 #define BIT0_TARGET_512      		512U
